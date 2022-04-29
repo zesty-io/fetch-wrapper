@@ -2,7 +2,7 @@
 
 # Zesty.io API Fetch Wrapper
 
-A javascript fetch wrapper for the Zesty.io APIs for frontend clients.
+A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a backend node wrapper, use the [Zesty.io Node SDK](https://www.npmjs.com/package/@zesty-io/sdk) 
 
 ### API Service the Wrapper can Access
 
