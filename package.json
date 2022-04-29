@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
-    "release": "release-it --no-increment --no-npm"
+    "release": "release-it --no-npm"
   },
   "keywords": [],
   "author": "Zesty.io",
