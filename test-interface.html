@@ -1,0 +1,105 @@
+<html>
+    <!-- NOTE: THIS FILE ONLY WORKS FROM A ZESTY.IO DOMAIN DUE TO CORS RESTRICTIONS ON THE REST API -->
+    <head>
+        <title>Zesty.io Rest API Fetch Wrapper</title>
+        <script type="text/javascript" src="https://zesty-io.github.io/websites/fetch-api-wrapper/zestyio-rest-fetch-wrapper.js?t={{site.date(U)}}"></script>
+        <script>
+
+            var ZestyAPI = {}
+
+            // cookie things
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                var user = getCookie("username");
+                if (user != "") {
+                    alert("Welcome again " + user);
+                } else {
+                    user = prompt("Please enter your name:", "");
+                    if (user != "" && user != null) {
+                    setCookie("username", user, 365);
+                    }
+                }
+            }
+
+            function updateToken(name, value){
+                setCookie(name,value)
+                window.location.reload()
+            }
+
+            if(getCookie('APP_SID') != ''){
+                console.log('API Instantiated')
+                ZestyAPI = new ZestyioRestFetchWrapper('8-82f8f3fff6-4zq0d0',getCookie('APP_SID'))
+                console.log(ZestyAPI)
+            }
+
+            async function testMethod(func, resultsID='results'){
+
+                let results = await func
+                console.log(results)
+                document.querySelector(`#${resultsID}`).innerText = JSON.stringify(results)
+            }
+
+            function clearResults(resultsID='results'){
+                document.querySelector(`#${resultsID}`).innerText = ''
+            }
+
+
+        </script>
+        <style>
+            body,html {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                background: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="padding: 5px 10px; border-radius: 5px; background: lightgrey; display: flex;">
+            <div style="flex: 5">
+                <h3>Start testing by setting up an auth cookie!</h3>
+               
+                <label>Enter your Zesty.io auth token (APP_SID):</label>
+                <input type="text" value="" onChange="updateToken('APP_SID',this.value)">
+                <p> You will find this by logging into accounts.zesty.io, then look at browser cookies under APP_SID.</p>
+                
+            </div>
+            <div style="flex: 1; padding: 20px; max-width: 100px">
+                <img src="https://brand.zesty.io/zesty-io-logo.png" width="100%">
+            </div>
+
+        </div>
+        
+        <button onclick="testMethod(ZestyAPI.getInstances())">Get Instance</button>
+        <button onclick="testMethod(ZestyAPI.getModels())">Get Models</button>
+        <button onclick="testMethod(ZestyAPI.getViews())">Get Views</button>
+        <button onclick="testMethod(ZestyAPI.createView('hello-world','mycode'))">Make View</button>
+        <button onclick="testMethod(ZestyAPI.updateView('11-c6a8b7f8ed-wn3gn1','foo bar'))">Update View</button>
+        
+        <button onclick="clearResults()">Clear Results</button>
+
+        <div id="results" style="background:#eee; padding: 20px; margin: 10px; white-space: pre; overflow: scroll; font-size: 10px; font-family: mono">
+        </div>
+
+
+    </body>
+</html>
