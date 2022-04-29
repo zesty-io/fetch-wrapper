@@ -3,6 +3,15 @@
 # Zesty.io API Fetch Wrapper 
 A javascript fetch wrapper for the Zesty.io APIs for frontend clients.  
 
+### API Service the Wrapper can Access
+
+* Instances API https://instances-api.zesty.org/
+* Accounts API https://accounts-api.zesty.org/
+* Auth API https://auth-api.zesty.org/
+* Media API https://media-api.zesty.org/
+
+Note all endpoints are ported. If you wish to port any missing endpoints, create a fork and pull request. 
+
 # Getting Started
 
 Include the fetch wrapper into your project
