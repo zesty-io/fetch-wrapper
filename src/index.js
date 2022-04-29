@@ -1,3 +1,3 @@
-import ZestyioRestFetchWrapper from "./ZestyioRestFetchWrapper";
+import FetchWrapper from "./FetchWrapper";
 
-export { ZestyioRestFetchWrapper };
+export { FetchWrapper };

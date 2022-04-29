@@ -1,8 +1,8 @@
 {
-  "name": "@zesty-io/zesty-fetch-wrapper",
+  "name": "@zesty-io/fetch-wrapper",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/index_bundle.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
     "release": "release-it --no-increment --no-npm"

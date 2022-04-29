@@ -18,7 +18,7 @@ Note all endpoints are ported. If you wish to port any missing endpoints, create
 Include the fetch wrapper into your project
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/zesty-io/api-fetch-wrapper@latest/dist/index_bundle.min.js" />
+<script src="https://cdn.jsdelivr.net/gh/zesty-io/api-fetch-wrapper@latest/dist/index.min.js" />
 ```
 
 # Example Usage
@@ -29,7 +29,7 @@ For this wrapper to run, you need an authenticated Zesty.io user APP_SID and a I
 const instanceZUID = '8-xyzxyz-xyz'
 const userAppSID = 'xxxxxxxxxx'
 
-ZestyAPI = new $.ZestyioRestFetchWrapper(instanceZUID,userAppSID)
+ZestyAPI = new Zesty.FetchWrapper(instanceZUID,userAppSID)
 
 console.log(ZestyAPI.getModels())
 

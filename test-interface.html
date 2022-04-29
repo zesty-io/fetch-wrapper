@@ -2,8 +2,7 @@
   <!-- NOTE: THIS FILE ONLY WORKS FROM A ZESTY.IO DOMAIN DUE TO CORS RESTRICTIONS ON THE REST API -->
   <head>
     <title>Zesty.io Rest API Fetch Wrapper</title>
-    <!-- <script type="text/javascript" src="https://zesty-io.github.io/websites/fetch-api-wrapper/zestyio-rest-fetch-wrapper.js?t={{site.date(U)}}"></script> -->
-    <script type="text/javascript" src="/dist/index_bundle.js"></script>
+    <script type="text/javascript" src="/dist/index.js"></script>
     <script>
       var ZestyAPI = {};
 
@@ -49,8 +48,8 @@
 
       if (getCookie("APP_SID") != "") {
         console.log("API Instantiated");
-        ZestyAPI = new $.ZestyioRestFetchWrapper(
-          "8-82f8f3fff6-4zq0d0",
+        ZestyAPI = new Zesty.FetchWrapper(
+          getCookie("INSTANCE_ZUID"),
           getCookie("APP_SID")
         );
         console.log(ZestyAPI);
@@ -90,8 +89,17 @@
         <label>Enter your Zesty.io auth token (APP_SID):</label>
         <input
           type="text"
+          placeholder="APP SID"
+          value=""
           value=""
           onChange="updateToken('APP_SID',this.value)"
+        />
+        <label>Enter your INSTANCE ZUID:</label>
+        <input
+          type="text"
+          placeholder="Instance Zuid"
+          value=""
+          onChange="updateToken('INSTANCE_ZUID',this.value)"
         />
         <p>
           You will find this by logging into accounts.zesty.io, then look at
@@ -103,6 +111,7 @@
       </div>
     </div>
 
+    <button onclick="testMethod(ZestyAPI.verify())">Verify User</button>
     <button onclick="testMethod(ZestyAPI.getInstances())">Get Instance</button>
     <button onclick="testMethod(ZestyAPI.getModels())">Get Models</button>
     <button onclick="testMethod(ZestyAPI.getViews())">Get Views</button>
@@ -117,7 +126,7 @@
 
     <button onclick="clearResults()">Clear Results</button>
 
-    <div
+    <pre
       id="results"
       style="
         background: #eee;
@@ -128,6 +137,6 @@
         font-size: 10px;
         font-family: mono;
       "
-    ></div>
+    ></pre>
   </body>
 </html>

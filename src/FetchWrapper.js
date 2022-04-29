@@ -5,7 +5,7 @@
  * More info at https://github.com/zesty-io/websites/fetch-api-wrapper/
  */
 
-export default class ZestyioRestFetchWrapper {
+export default class FetchWrapper {
   constructor(instanceZUID, authToken, options = {}) {
     this.instanceZUID = instanceZUID;
     this.authToken = authToken;
