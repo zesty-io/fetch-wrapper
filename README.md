@@ -25,5 +25,11 @@ Include the fetch wrapper into your project
 For this wrapper to run, you need an authenticated Zesty.io user APP_SID and a Instance ZUID
 
 ```
+const instanceZUID = '8-xyzxyz-xyz'
+const userAppSID = 'xxxxxxxxxx'
+
+ZestyAPI = new ZestyioRestFetchWrapper(instanceZUID,userAppSID)
+
+console.log(ZestyAPI.getModels())
 
 ```
