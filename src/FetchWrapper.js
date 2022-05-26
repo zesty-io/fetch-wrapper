@@ -11,10 +11,10 @@ export default class FetchWrapper {
       this.authToken = authToken
 
       this.accountsAPIEndpoints = {
-         instanceAppInstallPost: "/instances/INSTANCE_ZUID/app-installs",
+         instanceAppInstallPOST: "/instances/INSTANCE_ZUID/app-installs",
          instanceAppInstalls: "/instances/INSTANCE_ZUID/app-installs",
-         instanceAppInstallGet: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
-         instanceAppInstallDelete: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
+         instanceAppInstallGET: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
+         instanceAppInstallDELETE: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
          instanceGET: "/instances/INSTANCE_ZUID",
          instanceUsersGET: "/instances/INSTANCE_ZUID/users/roles",
          userGET: "/users/USER_ZUID",
@@ -208,7 +208,7 @@ export default class FetchWrapper {
    async installApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
-         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPost, {
+         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPOST, {
             INSTANCE_ZUID: instanceZUID,
          })
       let payload = JSON.stringify({
@@ -219,7 +219,7 @@ export default class FetchWrapper {
    async updateApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
-         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPost, {
+         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPOST, {
             INSTANCE_ZUID: instanceZUID,
          })
       let payload = JSON.stringify({
@@ -230,7 +230,7 @@ export default class FetchWrapper {
    async getAllApps(instanceZUID) {
       let url =
          this.accountsAPIURL +
-         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPost, {
+         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstalls, {
             INSTANCE_ZUID: instanceZUID,
          })
       return await this.makeRequest(url)
@@ -238,7 +238,7 @@ export default class FetchWrapper {
    async getApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
-         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallGet, {
+         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallGET, {
             INSTANCE_ZUID: instanceZUID,
             APP_ZUID: appZUID,
          })
@@ -247,7 +247,7 @@ export default class FetchWrapper {
    async deleteApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
-         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallDelete, {
+         this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallDELETE, {
             INSTANCE_ZUID: instanceZUID,
             APP_ZUID: appZUID,
          })
