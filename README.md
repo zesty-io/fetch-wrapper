@@ -44,7 +44,7 @@ npm start
 then add this in the head of Html
 
 ```
-  <script src="http://localhost:8080/dist/index.js" />
+  <script src="http://localhost:8080/index.js" />
 ```
 
 # How to build in Production
