@@ -19,6 +19,11 @@ export default class FetchWrapper {
          instanceUsersGET: "/instances/INSTANCE_ZUID/users/roles",
          userGET: "/users/USER_ZUID",
          instances: "/instances",
+         apps: "/apps",
+         appsPOST: "/apps",
+         appsGET: "apps/APP_ZUID",
+         appsPUT: "apps/APP_ZUID",
+         appsDELETE: "apps/APP_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -205,6 +210,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
 
+   // APP installations Section
    async installApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
@@ -216,7 +222,7 @@ export default class FetchWrapper {
       })
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateApp(instanceZUID, appZUID) {
+   async updateInstalledApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPOST, {
@@ -227,7 +233,7 @@ export default class FetchWrapper {
       })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async getAllApps(instanceZUID) {
+   async getAllInstalledApps(instanceZUID) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstalls, {
@@ -235,7 +241,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getApp(instanceZUID, appZUID) {
+   async getInstalledApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallGET, {
@@ -244,11 +250,55 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteApp(instanceZUID, appZUID) {
+   async deleteInstalledApp(instanceZUID, appZUID) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallDELETE, {
             INSTANCE_ZUID: instanceZUID,
+            APP_ZUID: appZUID,
+         })
+      return await this.makeRequest(url, "DELETE")
+   }
+
+   // App Registration Section
+   async registerApp(name, label, uri, publisher) {
+      let url =
+         this.accountsAPIURL + this.replaceInURL(this.accountsAPIEndpoints.appsPOST)
+      let payload = JSON.stringify({
+         name,
+         label,
+         url: uri,
+         publisher,
+      })
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getAllRegisterdApps() {
+      let url = this.accountsAPIURL + this.replaceInURL(this.accountsAPIEndpoints.apps)
+      return await this.makeRequest(url)
+   }
+   async getRegisteredApp(appZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.appsGET, {
+            APP_ZUID: appZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async updateRegisteredApp(appZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.appsPUT, {
+            APP_ZUID: appZUID,
+         })
+      let payload = JSON.stringify({
+         appZUID: appZUID,
+      })
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteRegisteredApp(appZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.appsDELETE, {
             APP_ZUID: appZUID,
          })
       return await this.makeRequest(url, "DELETE")

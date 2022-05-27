@@ -18,7 +18,7 @@ Note all endpoints are ported. If you wish to port any missing endpoints, create
 Include the fetch wrapper into your project
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.min.js" />
+<script src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.js" />
 ```
 
 # Example Usage
