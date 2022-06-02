@@ -17,38 +17,37 @@ Note all endpoints are ported. If you wish to port any missing endpoints, create
 
 Include the fetch wrapper into your project
 
-```
-<script src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.min.js" />
+```jsx
+<script src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.js" />
 ```
 
 # Example Usage
 
 For this wrapper to run, you need an authenticated Zesty.io user APP_SID and a Instance ZUID
 
-```
-const instanceZUID = '8-xyzxyz-xyz'
-const userAppSID = 'xxxxxxxxxx'
+```jsx
+const instanceZUID = "8-xyzxyz-xyz"
+const userAppSID = "xxxxxxxxxx"
 
-ZestyAPI = new Zesty.FetchWrapper(instanceZUID,userAppSID)
+const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID)
 
 console.log(ZestyAPI.getModels())
-
 ```
 
 # How to run in Development
 
-```
+```jsx
 npm start
 ```
 
 then add this in the head of Html
 
-```
-  <script src="http://localhost:8080/index.js" />
+```jsx
+<script src="http://localhost:8080/index.js" />
 ```
 
 # How to build in Production
 
-```
+```jsx
 git checkout main && npm run build && npm run release
 ```
