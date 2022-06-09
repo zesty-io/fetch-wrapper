@@ -72,7 +72,7 @@ export default class FetchWrapper {
       }
 
       this.authAPIURL = options.hasOwnProperty("authAPIURL")
-         ? options.instancesAPIURL
+         ? options.authAPIURL
          : "https://auth.api.zesty.io"
       this.instancesAPIURL = options.hasOwnProperty("instancesAPIURL")
          ? options.instancesAPIURL
