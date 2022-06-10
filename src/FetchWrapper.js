@@ -97,7 +97,7 @@ export default class FetchWrapper {
       return this.replaceInURL(url, { INSTANCE_ZUID: zuid })
    }
    getInstanceAPIURL() {
-      return "https://" + this.instanceZUID + ".api.zesty.io/v1"
+      return this.instancesAPIURL
    }
    setInstanceZUID(zuid) {
       return (this.instanceZUID = zuid)
