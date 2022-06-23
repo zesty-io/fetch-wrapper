@@ -75,7 +75,7 @@ export default class FetchWrapper {
          ? options.authAPIURL
          : "https://auth.api.zesty.io"
       this.instancesAPIURL = options.hasOwnProperty("instancesAPIURL")
-         ? options.instancesAPIURL
+         ? "https://" + this.instanceZUID + options.instancesAPIURL
          : "https://" + this.instanceZUID + ".api.zesty.io/v1"
       this.accountsAPIURL = options.hasOwnProperty("accountsAPIURL")
          ? options.accountsAPIURL
@@ -84,7 +84,7 @@ export default class FetchWrapper {
          ? options.mediaAPIURL
          : "https://svc.zesty.io"
       this.sitesServiceURL = options.hasOwnProperty("sitesServiceURL")
-         ? options.sitesServiceURL
+         ? options.sitesServiceURL + this.instanceZUID
          : "https://svc.zesty.io/sites-service/" + this.instanceZUID
       this.logErrors = options.hasOwnProperty("logErrors") ? options.logErrors : false
       this.logResponses = options.hasOwnProperty("logResponses")
@@ -97,7 +97,7 @@ export default class FetchWrapper {
       return this.replaceInURL(url, { INSTANCE_ZUID: zuid })
    }
    getInstanceAPIURL() {
-      return "https://" + this.instanceZUID + ".api.zesty.io/v1"
+      return this.instancesAPIURL
    }
    setInstanceZUID(zuid) {
       return (this.instanceZUID = zuid)
