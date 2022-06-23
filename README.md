@@ -18,7 +18,10 @@ Note all endpoints are ported. If you wish to port any missing endpoints, create
 Include the fetch wrapper into your project
 
 ```jsx
-<script src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.js" />
+<script
+   async
+   src="https://cdn.jsdelivr.net/gh/zesty-io/fetch-wrapper@latest/dist/index.js"
+></script>
 ```
 
 # Example Usage
@@ -43,7 +46,7 @@ npm start
 then add this in the head of Html
 
 ```jsx
-<script src="http://localhost:8080/index.js" />
+<script async src="http://localhost:8080/index.js"></script>
 ```
 
 # How to build in Production

@@ -303,4 +303,8 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE")
    }
+   async getSettings() {
+      let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.settings
+      return await this.makeRequest(url)
+   }
 }
