@@ -41,6 +41,7 @@ export default class FetchWrapper {
          items: "/content/models/MODEL_ZUID/items",
          views: "/web/views", // ?action=publish&purge_cache=true
          settings: "/env/settings",
+         settingUpdate: "/env/settings/SETTING_ZUID",
          stylesheets: "/web/stylesheets", // ?action=publish&purge_cache=true
          stylesheetsVersions: "/web/stylesheets/STYLESHEET_ZUID/versions",
          scriptsVersions: "/web/scripts/SCRIPT_ZUID/versions/VERSION_NUMBER",
@@ -306,5 +307,16 @@ export default class FetchWrapper {
    async getSettings() {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.settings
       return await this.makeRequest(url)
+   }
+   async updateSetting(settingZUID, body) {
+      let url = 
+         this.getInstanceAPIURL() + 
+         this.replaceInURL(this.instanceAPIEndpoints.settingUpdate, {
+            SETTING_ZUID : settingZUID
+         })
+      
+      let payload = JSON.stringify(body)
+      
+      return await this.makeRequest(url, "PUT", payload)
    }
 }
