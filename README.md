@@ -49,26 +49,33 @@ then add this in the head of Html
 <script async src="http://localhost:8080/index.js"></script>
 ```
 
-# How to build in Production
-
-```jsx
-git checkout main && npm run build && npm run release
-```
-
 # Use in Development Mode
+
 To access dev and stage api url for zesty development, pass options to the instantation like so:
 
 ```jsx
 const instanceZUID = "8-xyzxyz-xyz"
 const userAppSID = "xxxxxxxxxx"
 
-const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID,{
-  sitesServiceURL: 'https://svc.dev.zesty.io/sites-service/',
-  instancesAPIURL: '.api.dev.zesty.io/v1',
-  authAPIURL: 'https://auth.api.dev.zesty.io',
-  accountsAPIURL: 'https://accounts.api.dev.zesty.io/v1',
-  mediaAPIURL: 'https://svc.dev.zesty.io'
+const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID, {
+   sitesServiceURL: "https://svc.dev.zesty.io/sites-service/",
+   instancesAPIURL: ".api.dev.zesty.io/v1",
+   authAPIURL: "https://auth.api.dev.zesty.io",
+   accountsAPIURL: "https://accounts.api.dev.zesty.io/v1",
+   mediaAPIURL: "https://svc.dev.zesty.io",
 })
 
 console.log(ZestyAPI.getModels())
+```
+
+# When commiting to github use
+
+```jsx
+npm run commit
+```
+
+### How to build in Production
+
+```jsx
+git checkout main && npm run build && npm run release
 ```
