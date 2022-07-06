@@ -6,6 +6,7 @@
    "scripts": {
       "start": "webpack-dev-server --hot --open --mode=development ",
       "build": "webpack --mode=production",
+      "commit": "npm run build && git add . && git commit -m",
       "release": "release-it --no-npm"
    },
    "keywords": [],
