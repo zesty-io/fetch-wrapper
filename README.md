@@ -74,11 +74,14 @@ console.log(ZestyAPI.getModels())
 npm run commit
 ```
 
-### How to build in Production
+# Bulding in Production
+
+-  Automated
+
+   -  On successful merge to main will publish new release
+
+-  Manually
 
 ```jsx
 git checkout main && npm run build && npm run release
 ```
-
-   Updated on 
-Thu Jul  7 04:24:09 UTC 2022

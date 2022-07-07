@@ -26,9 +26,8 @@ jobs:
            env:
               GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
            run: |
-              printf "\n   Updated on \n$(date)" >> README.md
               git add .
-              git commit -m "bump version "
+              git commit --allow-empty -m "bump version"
               git push origin version-branch:main
 
          # Create Release
