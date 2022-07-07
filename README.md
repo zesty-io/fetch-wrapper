@@ -79,3 +79,6 @@ npm run commit
 ```jsx
 git checkout main && npm run build && npm run release
 ```
+
+   Updated on 
+Thu Jul  7 04:24:09 UTC 2022
