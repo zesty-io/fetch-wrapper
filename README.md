@@ -74,8 +74,6 @@ console.log(ZestyAPI.getModels())
 npm run commit
 ```
 
-# When performin pr to main always increment the version in package.json
-
 ### How to build in Production
 
 ```jsx
