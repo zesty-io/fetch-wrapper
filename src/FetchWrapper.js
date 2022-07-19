@@ -44,6 +44,12 @@ export default class FetchWrapper {
          usersPOST: "/users",
          userPUT: "/users/USER_ZUID",
          userDELETE: "/users/USER_ZUID",
+         // User Emails
+         usersEmailPOST: "/users/emails",
+         usersEmailDELETE: "/users/emails",
+         userEmailsGET: "/users/emails",
+         userEmailVerifyGET: "/users/emails/verifications",
+         userEmailVerifyPOST: "/users/emails/verifications",
       }
 
       this.sitesServiceEndpoints = {
@@ -534,5 +540,42 @@ export default class FetchWrapper {
             USER_ZUID: userZUID,
          })
       return await this.makeRequest(url, "DELETE")
+   }
+
+   // user/emails functions
+
+   async addUnverifiedEmail(name, address) {
+      let payload = JSON.stringify({
+         name,
+         address,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.usersEmailPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async deleteUserEmail(email) {
+      let url =
+         this.accountsAPIURL +
+         this.accountsAPIEndpoints.usersEmailDELETE +
+         `?address=${email}`
+      return await this.makeRequest(url, "DELETE")
+   }
+   async getUserEmails() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.userEmailsGET
+      return await this.makeRequest(url)
+   }
+   async verifyEmailAddress(address, verificationCode) {
+      let url =
+         this.accountsAPIURL +
+         this.accountsAPIEndpoints.userEmailVerifyGET +
+         `?address=${address}&verificationCode${verificationCode}`
+      return await this.makeRequest(url)
+   }
+   async resendEmailVerification(address) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.accountsAPIEndpoints.userEmailVerifyPOST +
+         `?address=${address}`
+      return await this.makeRequest(url, "POST", payload)
    }
 }
