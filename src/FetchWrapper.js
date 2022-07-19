@@ -74,6 +74,11 @@ export default class FetchWrapper {
          teamPUT: "/teams/TEAM_ZUID",
          teamDELETE: "/teams/TEAM_ZUID",
          teams: "/teams",
+         // Teams Instances
+         teamInstancesPOST: "/instances/INSTANCE_ZUID/teams",
+         instancesTeamsGET: "/instances/INSTANCE_ZUID/teams",
+         teamInstancesGET: "/teams/TEAM_ZUID/instances",
+         teamInstanceDELETE: "/instances/INSTANCE_ZUID/teams/TEAM_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -753,5 +758,45 @@ export default class FetchWrapper {
    async getAllTeams() {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teams
       return await this.makeRequest(url)
+   }
+   // Teams Instances Functins
+
+   async addTeamToInstance(instanceZUID, teamZUID, roleZUID) {
+      let payload = JSON.stringify({
+         teamZUID,
+         roleZUID,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInstancesPOST, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getAllInstancesTeams(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesTeamsGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getAllTeamsInstances(teamZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInstancesGET, {
+            TEAM_ZUID: teamZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async removeTeamFromInstance(instanceZUID, teamZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInstanceDELETE, {
+            TEAM_ZUID: teamZUID,
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
    }
 }
