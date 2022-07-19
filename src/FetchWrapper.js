@@ -102,6 +102,12 @@ export default class FetchWrapper {
          userRolesPOST: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesDELETE: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesPUT: "/users/USER_ZUID/roles/ROLE_ZUID",
+         // Roles Granular
+         rolesGranularGET: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
+         rolesGranularDELETE: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
+         rolesGranular: "/roles/ROLE_ZUID/granulars",
+         rolesGranularPUT: "/roles/ROLE_ZUID/granulars",
+         rolesGranularPOST: "/roles/ROLE_ZUID/granulars",
       }
 
       this.sitesServiceEndpoints = {
@@ -1001,5 +1007,68 @@ export default class FetchWrapper {
             ROLE_ZUID: roleZUID,
          })
       return await this.makeRequest(url, "PUT", payload)
+   }
+   // Roles Granular
+
+   async getGranularRole(roleZUID, resourceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularGET, {
+            ROLE_ZUID: roleZUID,
+            RESOURCE_ZUID: resourceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async deleteGranularRole(roleZUID, resourceZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularDELETE, {
+            ROLE_ZUID: roleZUID,
+            RESOURCE_ZUID: resourceZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+
+   async getAllGranularRoles(roleZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranular, {
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async updateGranularRoles(
+      roleZUID,
+      resourceZUID,
+      name = "",
+      create = true,
+      read = true,
+      update = true,
+      remove = false,
+   ) {
+      let payload = JSON.stringify({
+         resourceZUID,
+         name,
+         create,
+         read,
+         update,
+         delete: remove,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPUT, {
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async createGranularRole(roleZUID, resourceZUID, create = true) {
+      let payload = JSON.stringify({ resourceZUID, create })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPOST, {
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "POST", payload)
    }
 }
