@@ -79,6 +79,12 @@ export default class FetchWrapper {
          instancesTeamsGET: "/instances/INSTANCE_ZUID/teams",
          teamInstancesGET: "/teams/TEAM_ZUID/instances",
          teamInstanceDELETE: "/instances/INSTANCE_ZUID/teams/TEAM_ZUID",
+         // Team Invite
+         teamInviteGET: "/teams/invites/TEAM_INVITE_ZUID",
+         teamInvites: "/teams/invites",
+         teamInvitesPOST: "/teams/invites",
+         teamInvitePUT: "/teams/invites/TEAM_INVITE_ZUID",
+         teamInviteDELETE: "/teams/invites/TEAM_INVITE_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -796,6 +802,49 @@ export default class FetchWrapper {
          this.replaceInURL(this.accountsAPIEndpoints.teamInstanceDELETE, {
             TEAM_ZUID: teamZUID,
             INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   // Team invites functions
+   async getTeamInvite(teamInviteZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInviteGET, {
+            TEAM_INVITE_ZUID: teamInviteZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getAllTeamInvites() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvites
+      return await this.makeRequest(url)
+   }
+   async createTeamInvite(teamZUID, inviteeName, inviteeEmail) {
+      let payload = JSON.stringify({
+         teamZUID,
+         inviteeName,
+         inviteeEmail,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvitesPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async respondToTeamInvite(teamInviteZUID, action) {
+      let payload = JSON.stringify({})
+
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInvitePUT, {
+            TEAM_INVITE_ZUID: teamInviteZUID,
+         }) +
+         `?action=${action}`
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteTeamInvite(teamInviteZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamInviteDELETE, {
+            TEAM_INVITE_ZUID: teamInviteZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
