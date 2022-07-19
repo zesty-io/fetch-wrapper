@@ -15,15 +15,23 @@ export default class FetchWrapper {
          instanceAppInstalls: "/instances/INSTANCE_ZUID/app-installs",
          instanceAppInstallGET: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
          instanceAppInstallDELETE: "/instances/INSTANCE_ZUID/app-installs/APP_ZUID",
-         instanceGET: "/instances/INSTANCE_ZUID",
-         instanceUsersGET: "/instances/INSTANCE_ZUID/users/roles",
          userGET: "/users/USER_ZUID",
-         instances: "/instances",
          apps: "/apps",
          appsPOST: "/apps",
          appsGET: "apps/APP_ZUID",
          appsPUT: "apps/APP_ZUID",
          appsDELETE: "apps/APP_ZUID",
+         intanceDnsPOST: "/instances/dns",
+         instanceGET: "/instances/INSTANCE_ZUID",
+         instances: "/instances",
+         instancesInvitedGET: "/instances/invites",
+         instanceUserGET: "/instances/INSTANCE_ZUID/users",
+         instanceUsersRolesGET: "/instances/INSTANCE_ZUID/users/roles",
+         instancesPendingUsersGET: "/instances/INSTANCE_ZUID/users/pending",
+         instancesCompaniesGET: "/instances/INSTANCE_ZUID/companies",
+         instancePUT: "/instances/INSTANCE_ZUID",
+         instanceBluprintPUT: "/instances/INSTANCE_ZUID/blueprints",
+         instanceDELETE: "/instances/INSTANCE_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -157,10 +165,6 @@ export default class FetchWrapper {
          this.replaceInURL(this.accountsAPIEndpoints.userGET, {
             USER_ZUID: userZUID,
          })
-      return await this.makeRequest(url)
-   }
-   async getInstances() {
-      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instances
       return await this.makeRequest(url)
    }
 
@@ -327,5 +331,108 @@ export default class FetchWrapper {
             MODEL_ZUID: appZUID,
          })
       return await this.makeRequest(url)
+   }
+
+   // INSTANCES
+
+   async createInstance(name, ecoZUID) {
+      let payload = JSON.stringify({
+         name,
+         ecoZUID,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instances
+      return await this.makeRequest(url, "POST", payload)
+   }
+
+   async verifyDns(domain, aRecord, cName) {
+      let payload = JSON.stringify({
+         domain,
+         aRecord,
+         cName,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.intanceDnsPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+
+   async getInstance(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getInstances() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instances
+      return await this.makeRequest(url)
+   }
+   async getAllInvitedInstances() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instancesInvited
+      return await this.makeRequest(url)
+   }
+
+   async getInstanceUsers(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceUserGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getInstanceUsersWithRoles(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceUsersRolesGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getInstancePendingUsers(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesPendingUsersGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getInstanceCompanies(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesCompaniesGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+
+   async updateInstance(instanceZUID, params) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancePUT, {
+            INSTANCE_ZUID: instanceZUID,
+         }) +
+         `?action=${params}`
+
+      return await this.makeRequest(url, "PUT")
+   }
+   async updateInstanceBlueprint(instanceZUID, zuid) {
+      let payload = JSON.stringify({
+         zuid,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceBluprintPUT, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+
+   async deleteInstance(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceDELETE, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url, "DELETE")
    }
 }
