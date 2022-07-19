@@ -61,6 +61,13 @@ export default class FetchWrapper {
          invitesPOST: "/invites",
          invitePUT: "/invites/INVITE_ZUID",
          inviteDELETE: "/invites/INVITE_ZUID",
+         //Blueprints
+         blueprintGET: "/blueprints/1",
+         blueprints: "/blueprints",
+         blueprintsPOST: "/blueprints",
+         blueprintPUT: "/blueprints/1",
+         blueprintDELETE: "/blueprints/1",
+         blueprintInstanceGET: "/instances/INSTANCE_ZUID/blueprints",
       }
 
       this.sitesServiceEndpoints = {
@@ -664,5 +671,41 @@ export default class FetchWrapper {
             INVITE_ZUID: inviteZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
+   }
+   // Blueprints Functions
+   async getBlueprint() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintGET
+      return await this.makeRequest(url)
+   }
+   async getAllBlueprints() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprints
+      return await this.makeRequest(url)
+   }
+   async createBlueprint(name) {
+      let payload = JSON.stringify({
+         name,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintsPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async updateBlueprint(name) {
+      let payload = JSON.stringify({ name })
+
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintPUT
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteBlueprint() {
+      let payload = JSON.stringify({})
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintDELETE
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   async getInstanceBlueprint(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.blueprintInstanceGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
    }
 }
