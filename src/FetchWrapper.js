@@ -85,6 +85,11 @@ export default class FetchWrapper {
          teamInvitesPOST: "/teams/invites",
          teamInvitePUT: "/teams/invites/TEAM_INVITE_ZUID",
          teamInviteDELETE: "/teams/invites/TEAM_INVITE_ZUID",
+         // Team Members
+         teamMembersGET: "/teams/TEAM_ZUID/users",
+         teamMembersPUT: "/teams/TEAM_ZUID/users/USER_ZUID",
+         teamMembersDELETE: "/teams/TEAM_ZUID/users/USER_ZUID",
+         teamMembersPendingGET: "/teams/TEAM_ZUID/users/pending",
       }
 
       this.sitesServiceEndpoints = {
@@ -847,5 +852,44 @@ export default class FetchWrapper {
             TEAM_INVITE_ZUID: teamInviteZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
+   }
+   // Team Members
+   async getTeamMembers(teamZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamMembersGET, {
+            TEAM_ZUID: teamZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async updateTeamMembers(teamZUID, userZUID, admin = false) {
+      let payload = JSON.stringify({ admin })
+
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamMembersPUT, {
+            TEAM_ZUID: teamZUID,
+            USER_ZUID: userZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteTeamMember(teamZUID, userZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamMembersDELETE, {
+            TEAM_ZUID: teamZUID,
+            USER_ZUID: userZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   async getTeamMembersPending(teamZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamMembersPendingGET, {
+            TEAM_ZUID: teamZUID,
+         })
+      return await this.makeRequest(url)
    }
 }
