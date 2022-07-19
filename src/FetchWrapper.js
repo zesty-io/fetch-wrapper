@@ -108,6 +108,12 @@ export default class FetchWrapper {
          rolesGranular: "/roles/ROLE_ZUID/granulars",
          rolesGranularPUT: "/roles/ROLE_ZUID/granulars",
          rolesGranularPOST: "/roles/ROLE_ZUID/granulars",
+         // Ecosystem
+         ecosystemPOST: "/ecosystems",
+         ecosystemGET: "/ecosystems/ECOSYSTEM_ZUID",
+         ecosystems: "/ecosystems",
+         ecosystemPUT: "/ecosystems/ECOSYSTEM_ZUID",
+         ecosystemDELETE: "/ecosystems/ECOSYSTEM_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -1070,5 +1076,79 @@ export default class FetchWrapper {
             ROLE_ZUID: roleZUID,
          })
       return await this.makeRequest(url, "POST", payload)
+   }
+   // Ecosystems
+   async createEcosystem(name, description) {
+      let payload = JSON.stringify({ name, description })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.ecosystemPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getEcosystem(ecosystemZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.ecosystemGET, {
+            ECOSYSTEM_ZUID: ecosystemZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getALLEcosystems() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.ecosystems
+      return await this.makeRequest(url)
+   }
+   async updateEcosystem(ecosystemZUID, name, description) {
+      let payload = JSON.stringify({ name, description })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.ecosystemPUT, {
+            ECOSYSTEM_ZUID: ecosystemZUID,
+         })
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async updateEcosystemDBDefaults(
+      ecosystemZUID,
+      defaultDatabaseHost = "1.1.1.1",
+      defaultDatabaseUser = "root",
+      defaultDatabasePassword = "pass",
+   ) {
+      let payload = JSON.stringify({
+         defaultDatabaseHost,
+         defaultDatabaseUser,
+         defaultDatabasePassword,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.ecosystemPUT, {
+            ECOSYSTEM_ZUID: ecosystemZUID,
+         }) +
+         `?action=updateDatabaseDefaults`
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async updateEcosystemCDNDefaults(
+      ecosystemZUID,
+      defaultCDNType = "AKAMAI",
+      defaultCDNPurgeURL = "https://location-of-cloud-purge-function.com",
+      defaultCDNPurgeAuth = "Secret Key",
+   ) {
+      let payload = JSON.stringify({
+         defaultCDNType,
+         defaultCDNPurgeURL,
+         defaultCDNPurgeAuth,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.ecosystemPUT, {
+            ECOSYSTEM_ZUID: ecosystemZUID,
+         }) +
+         `?action=updateCDNDefaults`
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteEcosystem(ecosystemZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.ecosystemDELETE, {
+            ECOSYSTEM_ZUID: ecosystemZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
    }
 }
