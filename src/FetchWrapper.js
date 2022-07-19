@@ -68,6 +68,12 @@ export default class FetchWrapper {
          blueprintPUT: "/blueprints/1",
          blueprintDELETE: "/blueprints/1",
          blueprintInstanceGET: "/instances/INSTANCE_ZUID/blueprints",
+         // Teams
+         teamGET: "/teams/TEAM_ZUID",
+         teamPOST: "/teams",
+         teamPUT: "/teams/TEAM_ZUID",
+         teamDELETE: "/teams/TEAM_ZUID",
+         teams: "/teams",
       }
 
       this.sitesServiceEndpoints = {
@@ -706,6 +712,46 @@ export default class FetchWrapper {
          this.replaceInURL(this.accountsAPIEndpoints.blueprintInstanceGET, {
             INSTANCE_ZUID: instanceZUID,
          })
+      return await this.makeRequest(url)
+   }
+   // Teams functions
+   async getTeam(teamZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamGET, {
+            TEAM_ZUID: teamZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async createTeam(Name) {
+      let payload = JSON.stringify({
+         Name,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async updateTeam(name, teamZUID) {
+      let payload = JSON.stringify({ name })
+
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamPUT, {
+            TEAM_ZUID: teamZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteTeam(teamZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.teamDELETE, {
+            TEAM_ZUID: teamZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   async getAllTeams() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.teams
       return await this.makeRequest(url)
    }
 }
