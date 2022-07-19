@@ -90,6 +90,18 @@ export default class FetchWrapper {
          teamMembersPUT: "/teams/TEAM_ZUID/users/USER_ZUID",
          teamMembersDELETE: "/teams/TEAM_ZUID/users/USER_ZUID",
          teamMembersPendingGET: "/teams/TEAM_ZUID/users/pending",
+         // Roles
+         roleGET: "/roles/ROLE_ZUID",
+         roleDELETE: "/roles/ROLE_ZUID",
+         rolesPOST: "/roles",
+         roles: "/roles",
+         instancesRoles: "/instances/INSTANCE_ZUID/roles",
+         instancesRolesPOST: "/instances/INSTANCE_ZUID/roles",
+         instancesRolesGET: "/instances/INSTANCE_ZUID/roles/ROLE_ZUID",
+         userRolesGET: "/users/USER_ZUID/roles",
+         userRolesPOST: "/users/USER_ZUID/roles/ROLE_ZUID",
+         userRolesDELETE: "/users/USER_ZUID/roles/ROLE_ZUID",
+         userRolesPUT: "/users/USER_ZUID/roles/ROLE_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -891,5 +903,103 @@ export default class FetchWrapper {
             TEAM_ZUID: teamZUID,
          })
       return await this.makeRequest(url)
+   }
+
+   // Roles
+
+   async getInstanceRoles(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesRoles, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async createInstanceRoles(instanceZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesRolesPOST, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getInstanceRole(instanceZUID, roleZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instancesRolesGET, {
+            INSTANCE_ZUID: instanceZUID,
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url)
+   }
+
+   async getRole(roleZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.roleGET, {
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async deleteRole(roleZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.roleDELETE, {
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   async createRole(name, entityZUID, systemRoleZUID) {
+      let payload = JSON.stringify({
+         name,
+         entityZUID,
+         systemRoleZUID,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.rolesPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getRoles() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.roles
+      return await this.makeRequest(url)
+   }
+   async getUserRoles(userZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.userRolesGET, {
+            USER_ZUID: userZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async assignUserRole(userZUID, roleZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.userRolesPOST, {
+            USER_ZUID: userZUID,
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async deleteUserRole(userZUID, roleZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.userRolesDELETE, {
+            USER_ZUID: userZUID,
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   async updateUserRole(userZUID, roleZUID) {
+      let payload = JSON.stringify({ roleZUID })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.userRolesPUT, {
+            USER_ZUID: userZUID,
+            ROLE_ZUID: roleZUID,
+         })
+      return await this.makeRequest(url, "PUT", payload)
    }
 }
