@@ -55,6 +55,12 @@ export default class FetchWrapper {
          companies: "/companies",
          companiesPOST: "/companies",
          companyDELETE: "/companies/COMPANY_ZUID",
+         // Invites
+         inviteGET: "/invites/INVITE_ZUID",
+         invites: "/invites",
+         invitesPOST: "/invites",
+         invitePUT: "/invites/INVITE_ZUID",
+         inviteDELETE: "/invites/INVITE_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -612,6 +618,50 @@ export default class FetchWrapper {
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.companyDELETE, {
             COMPANY_ZUID: companyZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   // Invites Functions
+   async getInvite(inviteZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.inviteGET, {
+            INVITE_ZUID: inviteZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getAllInvites() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.invites
+      return await this.makeRequest(url)
+   }
+   async createInvite(inviteeName, inviteeEmail, entityZUID, accessLevel) {
+      let payload = JSON.stringify({
+         inviteeName,
+         inviteeEmail,
+         entityZUID,
+         accessLevel,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.invitesPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async respondToInvite(inviteZUID, action) {
+      let payload = JSON.stringify({})
+
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.invitePUT, {
+            INVITE_ZUID: inviteZUID,
+         }) +
+         `?action=${action}`
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteInvite(inviteZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.inviteDELETE, {
+            INVITE_ZUID: inviteZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
