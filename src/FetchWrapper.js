@@ -114,6 +114,12 @@ export default class FetchWrapper {
          ecosystems: "/ecosystems",
          ecosystemPUT: "/ecosystems/ECOSYSTEM_ZUID",
          ecosystemDELETE: "/ecosystems/ECOSYSTEM_ZUID",
+         // Webhooks
+         webhooks: "/webhooks",
+         webhooksPOST: "/webhooks",
+         webhookGET: "/webhooks/WEBHOOK_ZUID",
+         instanceWebhookGET: "/instances/INSTANCE_ZUID/webhooks",
+         webhookDELETE: "/webhooks/WEBHOOK_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -1077,7 +1083,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "POST", payload)
    }
-   // Ecosystems
+   // Ecosystems functions
    async createEcosystem(name, description) {
       let payload = JSON.stringify({ name, description })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.ecosystemPOST
@@ -1148,6 +1154,57 @@ export default class FetchWrapper {
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.ecosystemDELETE, {
             ECOSYSTEM_ZUID: ecosystemZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+   // Webhook functions
+   async createWebhook(
+      scopedResource,
+      parentResourceZUID,
+      resource = "items",
+      eventAction = 1,
+      method = "GET",
+      URL,
+      contentType = "application/json",
+      text = "",
+   ) {
+      let payload = JSON.stringify({
+         scopedResource,
+         parentResourceZUID,
+         resource,
+         eventAction,
+         method,
+         URL,
+         contentType,
+         body: {
+            text,
+         },
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.webhooksPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async retrieveWebhook(webhookZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.webhookGET, {
+            WEBHOOK_ZUID: webhookZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async retrieveWebhookForInstance(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceWebhookGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async deleteWebhook(webhookZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.webhookDELETE, {
+            WEBHOOK_ZUID: webhookZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
