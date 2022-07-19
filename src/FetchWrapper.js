@@ -21,6 +21,7 @@ export default class FetchWrapper {
          appsGET: "apps/APP_ZUID",
          appsPUT: "apps/APP_ZUID",
          appsDELETE: "apps/APP_ZUID",
+         // Instances api
          intanceDnsPOST: "/instances/dns",
          instanceGET: "/instances/INSTANCE_ZUID",
          instances: "/instances",
@@ -32,6 +33,12 @@ export default class FetchWrapper {
          instancePUT: "/instances/INSTANCE_ZUID",
          instanceBluprintPUT: "/instances/INSTANCE_ZUID/blueprints",
          instanceDELETE: "/instances/INSTANCE_ZUID",
+         // Instance/Domains api
+         domainPOST: "/instances/INSTANCE_ZUID/domains",
+         domainPUT: "/instances/INSTANCE_ZUID/domains/DOMAIN_ZUID",
+         domainGET: "/instances/INSTANCE_ZUID/domains/DOMAIN_ZUID",
+         domainDELETE: "/instances/INSTANCE_ZUID/domains/DOMAIN_ZUID",
+         domains: "/instances/INSTANCE_ZUID/domains",
       }
 
       this.sitesServiceEndpoints = {
@@ -434,5 +441,53 @@ export default class FetchWrapper {
             INSTANCE_ZUID: instanceZUID,
          })
       return await this.makeRequest(url, "DELETE")
+   }
+   // Domains
+   async createDomain(instanceZUID, domain) {
+      let payload = JSON.stringify({
+         domain,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.domainPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async updateDomain(instanceZUID, domainZUID, domain) {
+      let payload = JSON.stringify({
+         domain,
+      })
+
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.domainPUT, {
+            INSTANCE_ZUID: instanceZUID,
+            DOMAIN_ZUID: domainZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async getDomain(instanceZUID, domainZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.domainGET, {
+            INSTANCE_ZUID: instanceZUID,
+            DOMAIN_ZUID: domainZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async deleteDomain(instanceZUID, domainZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.domainDELETE, {
+            INSTANCE_ZUID: instanceZUID,
+            DOMAIN_ZUID: domainZUID,
+         })
+      return await this.makeRequest(url, "DELETE")
+   }
+   async getDomain(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.domains, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
    }
 }
