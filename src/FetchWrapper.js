@@ -120,6 +120,12 @@ export default class FetchWrapper {
          webhookGET: "/webhooks/WEBHOOK_ZUID",
          instanceWebhookGET: "/instances/INSTANCE_ZUID/webhooks",
          webhookDELETE: "/webhooks/WEBHOOK_ZUID",
+         // Tokens
+         tokensPOST: "/tokens",
+         tokensGET: "/tokens/TOKEN_ZUID",
+         instanceTokenGET: "/instances/INSTANCE_ZUID/tokens",
+         tokensPUT: "/tokens/TOKEN_ZUID",
+         tokensDELETE: "/tokens/TOKEN_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -1205,6 +1211,50 @@ export default class FetchWrapper {
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.webhookDELETE, {
             WEBHOOK_ZUID: webhookZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
+   }
+
+   // Tokens Functions
+   async createToken(roleZUID, name) {
+      let payload = JSON.stringify({
+         roleZUID,
+         name,
+      })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.tokensPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async getToken(tokenZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.tokensGET, {
+            TOKEN_ZUID: tokenZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getInstanceToken(instanceZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.instanceTokenGET, {
+            INSTANCE_ZUID: instanceZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async updateToken(tokenZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.tokensPUT, {
+            TOKEN_ZUID: tokenZUID,
+         })
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async deleteToken(tokenZUID) {
+      let payload = JSON.stringify({})
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.tokensDELETE, {
+            TOKEN_ZUID: tokenZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
