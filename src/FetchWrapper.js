@@ -50,6 +50,11 @@ export default class FetchWrapper {
          userEmailsGET: "/users/emails",
          userEmailVerifyGET: "/users/emails/verifications",
          userEmailVerifyPOST: "/users/emails/verifications",
+         // Companies
+         companyGET: "/companies/COMPANY_ZUID",
+         companies: "/companies",
+         companiesPOST: "/companies",
+         companyDELETE: "/companies/COMPANY_ZUID",
       }
 
       this.sitesServiceEndpoints = {
@@ -577,5 +582,37 @@ export default class FetchWrapper {
          this.accountsAPIEndpoints.userEmailVerifyPOST +
          `?address=${address}`
       return await this.makeRequest(url, "POST", payload)
+   }
+   // Companies functions
+
+   async getCompany(companyZUID) {
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.companyGET, {
+            COMPANY_ZUID: companyZUID,
+         })
+      return await this.makeRequest(url)
+   }
+   async getAllCompanies() {
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.companies
+      return await this.makeRequest(url)
+   }
+   async createCompany(name, description) {
+      let payload = JSON.stringify({ name, description })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.companiesPOST
+      return await this.makeRequest(url, "POST", payload)
+   }
+   async deleteCompany(companyZUID, firstName, lastName, email) {
+      let payload = JSON.stringify({
+         firstName,
+         lastName,
+         email,
+      })
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.companyDELETE, {
+            COMPANY_ZUID: companyZUID,
+         })
+      return await this.makeRequest(url, "DELETE", payload)
    }
 }
