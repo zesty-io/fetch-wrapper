@@ -8,24 +8,19 @@
 
 <div align="center">
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/zesty-io/fetch-wrapper?style=flat-square)
-![GitHub issues](https://img.shields.io/github/issues/zesty-io/fetch-wrapper?style=flat-square)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat-square&logo=typescript&logoColor=white)
-![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=flat-square&logo=webpack&logoColor=black)
-![NPM](https://img.shields.io/npm/l/@zesty-io/live-editor?style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/zesty-io/fetch-wrapper?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/zesty-io/fetch-wrapper?style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+![NPM](https://img.shields.io/npm/l/@zesty-io/live-editor?style=for-the-badge)
 
 </div>
 
+<div align="center">
+
 A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a backend node wrapper, use the [Zesty.io Node SDK](https://www.npmjs.com/package/@zesty-io/sdk)
 
-### API Service the Wrapper can Access
-
--  Instances API https://instances-api.zesty.org/
--  Accounts API https://accounts-api.zesty.org/
--  Auth API https://auth-api.zesty.org/
--  Media API https://media-api.zesty.org/
-
-Note all endpoints are ported. If you wish to port any missing endpoints, create a fork and pull request.
+</div>
 
 # ⚡ Getting Started
 
@@ -50,6 +45,17 @@ const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID)
 
 console.log(ZestyAPI.getModels())
 ```
+
+# 🎯 Features
+
+### API Service the Wrapper can Access
+
+-  Instances API https://instances-api.zesty.org/
+-  Accounts API https://accounts-api.zesty.org/
+-  Auth API https://auth-api.zesty.org/
+-  Media API https://media-api.zesty.org/
+
+Note all endpoints are ported. If you wish to port any missing endpoints, create a fork and pull request.
 
 # 💡 How to run in Development
 
