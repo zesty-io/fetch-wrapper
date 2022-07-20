@@ -10,7 +10,8 @@
       "moduleResolution": "node",
       "sourceMap": false,
       "inlineSourceMap": true,
-      "baseUrl": "src"
+      "baseUrl": "src",
+      "esModuleInterop": true
       // "declaration": true
       // "declarationDir": "src/types"
    }

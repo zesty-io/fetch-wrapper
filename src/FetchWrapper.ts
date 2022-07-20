@@ -200,23 +200,23 @@ export default class FetchWrapper {
          verify: "/verify",
       }
 
-      this.authAPIURL = options.hasOwnProperty("authAPIURL")
+      this.authAPIURL = options?.hasOwnProperty("authAPIURL")
          ? options.authAPIURL
          : "https://auth.api.zesty.io"
-      this.instancesAPIURL = options.hasOwnProperty("instancesAPIURL")
+      this.instancesAPIURL = options?.hasOwnProperty("instancesAPIURL")
          ? "https://" + this.instanceZUID + options.instancesAPIURL
          : "https://" + this.instanceZUID + ".api.zesty.io/v1"
-      this.accountsAPIURL = options.hasOwnProperty("accountsAPIURL")
+      this.accountsAPIURL = options?.hasOwnProperty("accountsAPIURL")
          ? options.accountsAPIURL
          : "https://accounts.api.zesty.io/v1"
-      this.mediaAPIURL = options.hasOwnProperty("mediaAPIURL")
+      this.mediaAPIURL = options?.hasOwnProperty("mediaAPIURL")
          ? options.mediaAPIURL
          : "https://svc.zesty.io"
-      this.sitesServiceURL = options.hasOwnProperty("sitesServiceURL")
+      this.sitesServiceURL = options?.hasOwnProperty("sitesServiceURL")
          ? options.sitesServiceURL + this.instanceZUID
          : "https://svc.zesty.io/sites-service/" + this.instanceZUID
-      this.logErrors = options.hasOwnProperty("logErrors") ? options.logErrors : false
-      this.logResponses = options.hasOwnProperty("logResponses")
+      this.logErrors = options?.hasOwnProperty("logErrors") ? options.logErrors : false
+      this.logResponses = options?.hasOwnProperty("logResponses")
          ? options.logResponses
          : false
 
