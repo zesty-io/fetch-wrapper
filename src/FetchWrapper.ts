@@ -5,31 +5,30 @@
  * More info at https://github.com/zesty-io/websites/fetch-api-wrapper/
  */
 
-interface OPTIONS {
-   sitesServiceURL: string
-   instancesAPIURL: string
-   authAPIURL: string
-   accountsAPIURL: string
-   mediaAPIURL: string
-   logErrors: boolean
-   logResponses: boolean
-}
+import {
+   IaccountsAPIEndpoints,
+   IauthAPIEndpoints,
+   IinstanceAPIEndpoints,
+   ImediaAPIEndpoints,
+   IsiteServicesEndpoints,
+   OPTIONS,
+} from "types"
 
 export default class FetchWrapper {
    private instanceZUID: string
    private authToken: string
-   private accountsAPIEndpoints: any
-   private sitesServiceEndpoints: any
-   private instanceAPIEndpoints: any
-   private mediaAPIEndpoints: any
-   private authAPIEndpoints: any
+   private accountsAPIEndpoints: IaccountsAPIEndpoints
+   private sitesServiceEndpoints: IsiteServicesEndpoints
+   private instanceAPIEndpoints: IinstanceAPIEndpoints
+   private mediaAPIEndpoints: ImediaAPIEndpoints
+   private authAPIEndpoints: IauthAPIEndpoints
    private authAPIURL: string
    private instancesAPIURL: string
    private accountsAPIURL: string
    private mediaAPIURL: string
    private sitesServiceURL: string
-   private logErrors: any
-   private logResponses: any
+   private logErrors: boolean
+   private logResponses: boolean
 
    constructor(instanceZUID: string, authToken: string, options?: OPTIONS) {
       this.instanceZUID = instanceZUID
@@ -480,7 +479,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
    async getAllInvitedInstances() {
-      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instancesInvited
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.instancesInvitedGET
       return await this.makeRequest(url)
    }
 

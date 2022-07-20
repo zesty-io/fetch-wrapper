@@ -16,7 +16,7 @@
 /build
 /dist
 
-/src/types
+
 # misc
 .DS_Store
 *.pem
