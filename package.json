@@ -42,6 +42,9 @@
          "release": true
       }
    },
+   "engines": {
+      "node": ">=14 <15"
+   },
    "config": {
       "commitizen": {
          "path": "./node_modules/cz-conventional-changelog"
