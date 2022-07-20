@@ -1,6 +1,7 @@
 const path = require("path")
 const TerserPlugin = require("terser-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const Dotenv = require("dotenv-webpack")
 
 module.exports = {
    entry: path.resolve(__dirname, "src/index.ts"),
@@ -43,5 +44,5 @@ module.exports = {
          },
       ],
    },
-   plugins: [new CleanWebpackPlugin()],
+   plugins: [new CleanWebpackPlugin(), new Dotenv()],
 }
