@@ -1,0 +1,21 @@
+name: Fetchwrapper CI
+on:
+   push:
+      branches: [main]
+   pull_request:
+      branches: [main]
+   workflow_dispatch:
+jobs:
+   end-to-end-tests:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v2
+         - uses: actions/setup-node@v1
+           with:
+              node-version: "14.x"
+         - name: Setup custom host for mylocal
+           run: echo "127.0.0.1 test.zesty.io" | sudo tee -a /etc/hosts
+         - name: Install Dependencies
+           run: npm ci
+         - name: Build Project
+           run: npm run build

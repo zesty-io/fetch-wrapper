@@ -1,9 +1,10 @@
 const path = require("path")
 const TerserPlugin = require("terser-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const Dotenv = require("dotenv-webpack")
 
 module.exports = {
-   entry: path.resolve(__dirname, "src/index.js"),
+   entry: path.resolve(__dirname, "src/index.ts"),
    devtool: false,
    output: {
       path: path.resolve(__dirname, "dist"),
@@ -15,6 +16,9 @@ module.exports = {
       hints: false,
       maxEntrypointSize: 512000,
       maxAssetSize: 512000,
+   },
+   resolve: {
+      extensions: [".ts", ".js"],
    },
    optimization: {
       minimize: true,
@@ -34,11 +38,11 @@ module.exports = {
    module: {
       rules: [
          {
-            test: /\.(js)$/,
+            test: /\.ts?/,
+            use: "ts-loader",
             exclude: /node_modules/,
-            use: "babel-loader",
          },
       ],
    },
-   plugins: [new CleanWebpackPlugin()],
+   plugins: [new CleanWebpackPlugin(), new Dotenv()],
 }
