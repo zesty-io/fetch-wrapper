@@ -86,7 +86,7 @@ export default class FetchWrapper {
          invitesPOST: "/invites",
          invitePUT: "/invites/INVITE_ZUID",
          inviteDELETE: "/invites/INVITE_ZUID",
-         //Blueprints
+         //  Blueprints
          blueprintGET: "/blueprints/1",
          blueprints: "/blueprints",
          blueprintsPOST: "/blueprints",

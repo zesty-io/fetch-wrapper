@@ -2,6 +2,7 @@ module.exports = {
    env: {
       browser: true,
       es2021: true,
+      node: true,
    },
    extends: [
       "plugin:react/recommended",
@@ -19,13 +20,7 @@ module.exports = {
       ecmaVersion: "latest",
       sourceType: "module",
    },
-   plugins: [
-      "react",
-      "@typescript-eslint",
-      "@typescript-eslint",
-      "react-hooks",
-      "import",
-   ],
+   plugins: ["react", "@typescript-eslint", "react-hooks", "import"],
    rules: {
       "@typescript-eslint/no-non-null-assertion": 0,
       "@typescript-eslint/no-empty-function": 0,
@@ -35,8 +30,9 @@ module.exports = {
             patterns: ["@mui/*/*/*", "!@mui/material/test-utils/*"],
          },
       ],
+      "prefer-const": "off",
       "@typescript-eslint/no-unused-vars": "error",
-      "no-unused-vars": "off",
+      "no-unused-vars": "error",
       "no-empty-interface": 0,
       "@typescript-eslint/no-empty-interface": "off",
       "@typescript-eslint/ban-ts-comment": "off",
@@ -51,8 +47,11 @@ module.exports = {
       "react/react-in-jsx-scope": "off",
       "new-cap": 0,
       "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", "tsx"] }],
+      "@typescript-eslint/no-inferrable-types": "off",
+      "no-prototype-builtins": "off",
+      "guard-for-in": "off",
       "import/extensions": [
-         "error",
+         "off",
          "ignorePackages",
          {
             js: "never",
