@@ -9,27 +9,30 @@
       "commit": "npm run build && git add . && cz",
       "release": "release-it --no-npm"
    },
+   "types": "src/types/FetchWrapper.d.ts",
    "keywords": [],
    "author": "Zesty.io",
    "license": "ISC",
    "dependencies": {},
    "devDependencies": {
-      "@babel/core": "^7.10.4",
-      "@babel/preset-env": "^7.11.0",
-      "@webpack-cli/serve": "^1.6.1",
+      "@babel/core": "^7.18.9",
+      "@babel/preset-env": "^7.18.9",
+      "@webpack-cli/serve": "^1.7.0",
       "babel-core": "^6.26.3",
       "babel-loader": "^8.2.5",
       "babel-polyfill": "^6.26.0",
       "babel-preset-es2015": "^6.24.1",
       "babel-preset-stage-0": "^6.24.1",
       "clean-webpack-plugin": "^4.0.0",
-      "commitizen": "^4.2.4",
+      "commitizen": "^4.2.5",
       "cz-conventional-changelog": "^3.3.0",
-      "release-it": "^14.14.2",
+      "release-it": "^14.14.3",
       "terser-webpack-plugin": "^4.2.3",
-      "webpack": "^4.44.1",
-      "webpack-cli": "^3.3.12",
-      "webpack-dev-server": "^3"
+      "ts-loader": "^9.3.1",
+      "typescript": "^4.7.4",
+      "webpack": "^5.73.0",
+      "webpack-cli": "^4.10.0",
+      "webpack-dev-server": "^4.9.3"
    },
    "browserslist": [
       "last 2 Chrome versions"

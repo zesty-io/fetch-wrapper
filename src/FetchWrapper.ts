@@ -5,8 +5,33 @@
  * More info at https://github.com/zesty-io/websites/fetch-api-wrapper/
  */
 
+interface OPTIONS {
+   sitesServiceURL: string
+   instancesAPIURL: string
+   authAPIURL: string
+   accountsAPIURL: string
+   mediaAPIURL: string
+   logErrors: boolean
+   logResponses: boolean
+}
+
 export default class FetchWrapper {
-   constructor(instanceZUID, authToken, options = {}) {
+   private instanceZUID: string
+   private authToken: string
+   private accountsAPIEndpoints: any
+   private sitesServiceEndpoints: any
+   private instanceAPIEndpoints: any
+   private mediaAPIEndpoints: any
+   private authAPIEndpoints: any
+   private authAPIURL: string
+   private instancesAPIURL: string
+   private accountsAPIURL: string
+   private mediaAPIURL: string
+   private sitesServiceURL: string
+   private logErrors: any
+   private logResponses: any
+
+   constructor(instanceZUID: string, authToken: string, options?: OPTIONS) {
       this.instanceZUID = instanceZUID
       this.authToken = authToken
 
@@ -196,17 +221,17 @@ export default class FetchWrapper {
 
       this.sitesServiceURL = this.makeInstanceZUIDURL(this.sitesServiceURL, instanceZUID)
    }
-   makeInstanceZUIDURL(url, zuid) {
+   makeInstanceZUIDURL(url: string, zuid: string) {
       return this.replaceInURL(url, { INSTANCE_ZUID: zuid })
    }
    getInstanceAPIURL() {
       return this.instancesAPIURL
    }
-   setInstanceZUID(zuid) {
+   setInstanceZUID(zuid: string) {
       return (this.instanceZUID = zuid)
    }
 
-   buildAPIURL(uri, api = "instances") {
+   buildAPIURL(uri: string, api = "instances") {
       switch (api) {
          case "accounts":
             return `${this.accountsAPIURL}${uri}`
@@ -221,7 +246,7 @@ export default class FetchWrapper {
       }
    }
 
-   replaceInURL(url, replacementObject) {
+   replaceInURL(url: string, replacementObject: any = {}) {
       for (const key in replacementObject) {
          url = url.replace(key, replacementObject[key])
       }
@@ -229,7 +254,7 @@ export default class FetchWrapper {
       return url
    }
 
-   async makeRequest(url, method = "GET", body = "", options = {}) {
+   async makeRequest(url: string, method = "GET", body = "", options: any = {}) {
       if (method != "GET") options.body = body
 
       options.method = method
@@ -264,12 +289,12 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getView(zuid) {
+   async getView(zuid: string) {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.views + "/" + zuid
       return await this.makeRequest(url)
    }
 
-   async createView(fileName, code = "", type = "ajax-json") {
+   async createView(fileName: string, code = "", type = "ajax-json") {
       let payload = JSON.stringify({
          code: code,
          fileName: fileName,
@@ -279,7 +304,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "POST", payload)
    }
 
-   async updateView(viewZUID, code) {
+   async updateView(viewZUID: string, code: string) {
       let payload = JSON.stringify({
          code: code,
       })
@@ -288,7 +313,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
 
-   async publishView(viewZUID, code) {
+   async publishView(viewZUID: string, code: string) {
       let payload = JSON.stringify({
          code: code,
       })
@@ -302,7 +327,7 @@ export default class FetchWrapper {
    }
 
    // APP installations Section
-   async installApp(instanceZUID, appZUID) {
+   async installApp(instanceZUID: string, appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPOST, {
@@ -313,7 +338,7 @@ export default class FetchWrapper {
       })
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateInstalledApp(instanceZUID, appZUID) {
+   async updateInstalledApp(instanceZUID: string, appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallPOST, {
@@ -324,7 +349,7 @@ export default class FetchWrapper {
       })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async getAllInstalledApps(instanceZUID) {
+   async getAllInstalledApps(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstalls, {
@@ -332,7 +357,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getInstalledApp(instanceZUID, appZUID) {
+   async getInstalledApp(instanceZUID: string, appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallGET, {
@@ -341,7 +366,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteInstalledApp(instanceZUID, appZUID) {
+   async deleteInstalledApp(instanceZUID: string, appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceAppInstallDELETE, {
@@ -352,7 +377,7 @@ export default class FetchWrapper {
    }
 
    // App Registration Section
-   async registerApp(name, label, uri, publisher) {
+   async registerApp(name: string, label: string, uri: string, publisher: string) {
       let url =
          this.accountsAPIURL + this.replaceInURL(this.accountsAPIEndpoints.appsPOST)
       let payload = JSON.stringify({
@@ -367,7 +392,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.replaceInURL(this.accountsAPIEndpoints.apps)
       return await this.makeRequest(url)
    }
-   async getRegisteredApp(appZUID) {
+   async getRegisteredApp(appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.appsGET, {
@@ -375,7 +400,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async updateRegisteredApp(appZUID) {
+   async updateRegisteredApp(appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.appsPUT, {
@@ -386,7 +411,7 @@ export default class FetchWrapper {
       })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteRegisteredApp(appZUID) {
+   async deleteRegisteredApp(appZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.appsDELETE, {
@@ -398,7 +423,7 @@ export default class FetchWrapper {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.settings
       return await this.makeRequest(url)
    }
-   async updateSetting(settingZUID, body) {
+   async updateSetting(settingZUID: string, body: any) {
       let url =
          this.getInstanceAPIURL() +
          this.replaceInURL(this.instanceAPIEndpoints.settingUpdate, {
@@ -410,7 +435,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
 
-   async getFields(appZUID) {
+   async getFields(appZUID: string) {
       let url =
          this.getInstanceAPIURL() +
          this.replaceInURL(this.instanceAPIEndpoints.fields, {
@@ -421,7 +446,7 @@ export default class FetchWrapper {
 
    // INSTANCES Functions
 
-   async createInstance(name, ecoZUID) {
+   async createInstance(name: string, ecoZUID: string) {
       let payload = JSON.stringify({
          name,
          ecoZUID,
@@ -430,7 +455,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "POST", payload)
    }
 
-   async verifyDns(domain, aRecord, cName) {
+   async verifyDns(domain: string, aRecord: string, cName: string) {
       let payload = JSON.stringify({
          domain,
          aRecord,
@@ -440,7 +465,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "POST", payload)
    }
 
-   async getInstance(instanceZUID) {
+   async getInstance(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceGET, {
@@ -457,7 +482,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getInstanceUsers(instanceZUID) {
+   async getInstanceUsers(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceUserGET, {
@@ -465,7 +490,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getInstanceUsersWithRoles(instanceZUID) {
+   async getInstanceUsersWithRoles(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceUsersRolesGET, {
@@ -473,7 +498,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getInstancePendingUsers(instanceZUID) {
+   async getInstancePendingUsers(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancesPendingUsersGET, {
@@ -481,7 +506,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getInstanceCompanies(instanceZUID) {
+   async getInstanceCompanies(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancesCompaniesGET, {
@@ -490,7 +515,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async updateInstance(instanceZUID, params) {
+   async updateInstance(instanceZUID: string, params: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancePUT, {
@@ -500,7 +525,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT")
    }
-   async updateInstanceBlueprint(instanceZUID, zuid) {
+   async updateInstanceBlueprint(instanceZUID: string, zuid: string) {
       let payload = JSON.stringify({
          zuid,
       })
@@ -513,7 +538,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
 
-   async deleteInstance(instanceZUID) {
+   async deleteInstance(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceDELETE, {
@@ -522,14 +547,14 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE")
    }
    // Domains
-   async createDomain(instanceZUID, domain) {
+   async createDomain(instanceZUID: string, domain: string) {
       let payload = JSON.stringify({
          domain,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.domainPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateDomain(instanceZUID, domainZUID, domain) {
+   async updateDomain(instanceZUID: string, domainZUID: string, domain: string) {
       let payload = JSON.stringify({
          domain,
       })
@@ -543,7 +568,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async getDomain(instanceZUID, domainZUID) {
+   async getDomain(instanceZUID: string, domainZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.domainGET, {
@@ -552,7 +577,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteDomain(instanceZUID, domainZUID) {
+   async deleteDomain(instanceZUID: string, domainZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.domainDELETE, {
@@ -561,7 +586,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE")
    }
-   async getDomain(instanceZUID) {
+   async getAllDomain(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.domains, {
@@ -571,7 +596,7 @@ export default class FetchWrapper {
    }
 
    // User Functions
-   async getUser(userZUID) {
+   async getUser(userZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userGET, {
@@ -579,7 +604,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getUserInstances(userZUID) {
+   async getUserInstances(userZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userInstancesGET, {
@@ -587,7 +612,12 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async createUser(firstName, lastName, email, password) {
+   async createUser(
+      firstName: string,
+      lastName: string,
+      email: string,
+      password: string,
+   ) {
       let payload = JSON.stringify({
          firstName,
          lastName,
@@ -597,7 +627,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.usersPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateUser(userZUID) {
+   async updateUser(userZUID: string) {
       let payload = JSON.stringify({})
 
       let url =
@@ -609,7 +639,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteUser(userZUID) {
+   async deleteUser(userZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userDELETE, {
@@ -620,7 +650,7 @@ export default class FetchWrapper {
 
    // user/emails functions
 
-   async addUnverifiedEmail(name, address) {
+   async addUnverifiedEmail(name: string, address: string) {
       let payload = JSON.stringify({
          name,
          address,
@@ -628,7 +658,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.usersEmailPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async deleteUserEmail(email) {
+   async deleteUserEmail(email: string) {
       let url =
          this.accountsAPIURL +
          this.accountsAPIEndpoints.usersEmailDELETE +
@@ -639,14 +669,14 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.userEmailsGET
       return await this.makeRequest(url)
    }
-   async verifyEmailAddress(address, verificationCode) {
+   async verifyEmailAddress(address: string, verificationCode: string) {
       let url =
          this.accountsAPIURL +
          this.accountsAPIEndpoints.userEmailVerifyGET +
          `?address=${address}&verificationCode${verificationCode}`
       return await this.makeRequest(url)
    }
-   async resendEmailVerification(address) {
+   async resendEmailVerification(address: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -656,7 +686,7 @@ export default class FetchWrapper {
    }
    // Companies functions
 
-   async getCompany(companyZUID) {
+   async getCompany(companyZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.companyGET, {
@@ -668,12 +698,17 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.companies
       return await this.makeRequest(url)
    }
-   async createCompany(name, description) {
+   async createCompany(name: string, description: string) {
       let payload = JSON.stringify({ name, description })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.companiesPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async deleteCompany(companyZUID, firstName, lastName, email) {
+   async deleteCompany(
+      companyZUID: string,
+      firstName: string,
+      lastName: string,
+      email: string,
+   ) {
       let payload = JSON.stringify({
          firstName,
          lastName,
@@ -687,7 +722,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE", payload)
    }
    // Invites Functions
-   async getInvite(inviteZUID) {
+   async getInvite(inviteZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.inviteGET, {
@@ -699,7 +734,12 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.invites
       return await this.makeRequest(url)
    }
-   async createInvite(inviteeName, inviteeEmail, entityZUID, accessLevel) {
+   async createInvite(
+      inviteeName: string,
+      inviteeEmail: string,
+      entityZUID: string,
+      accessLevel: string,
+   ) {
       let payload = JSON.stringify({
          inviteeName,
          inviteeEmail,
@@ -709,7 +749,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.invitesPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async respondToInvite(inviteZUID, action) {
+   async respondToInvite(inviteZUID: string, action: string) {
       let payload = JSON.stringify({})
 
       let url =
@@ -721,7 +761,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteInvite(inviteZUID) {
+   async deleteInvite(inviteZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -739,14 +779,14 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprints
       return await this.makeRequest(url)
    }
-   async createBlueprint(name) {
+   async createBlueprint(name: string) {
       let payload = JSON.stringify({
          name,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintsPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateBlueprint(name) {
+   async updateBlueprint(name: string) {
       let payload = JSON.stringify({ name })
 
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintPUT
@@ -758,7 +798,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.blueprintDELETE
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async getInstanceBlueprint(instanceZUID) {
+   async getInstanceBlueprint(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.blueprintInstanceGET, {
@@ -767,7 +807,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
    // Teams functions
-   async getTeam(teamZUID) {
+   async getTeam(teamZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamGET, {
@@ -775,14 +815,14 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async createTeam(Name) {
+   async createTeam(Name: string) {
       let payload = JSON.stringify({
          Name,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateTeam(name, teamZUID) {
+   async updateTeam(name: string, teamZUID: string) {
       let payload = JSON.stringify({ name })
 
       let url =
@@ -793,7 +833,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteTeam(teamZUID) {
+   async deleteTeam(teamZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -808,7 +848,7 @@ export default class FetchWrapper {
    }
    // Teams Instances Functins
 
-   async addTeamToInstance(instanceZUID, teamZUID, roleZUID) {
+   async addTeamToInstance(instanceZUID: string, teamZUID: string, roleZUID: string) {
       let payload = JSON.stringify({
          teamZUID,
          roleZUID,
@@ -820,7 +860,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "POST", payload)
    }
-   async getAllInstancesTeams(instanceZUID) {
+   async getAllInstancesTeams(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancesTeamsGET, {
@@ -828,7 +868,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getAllTeamsInstances(teamZUID) {
+   async getAllTeamsInstances(teamZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamInstancesGET, {
@@ -836,7 +876,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async removeTeamFromInstance(instanceZUID, teamZUID) {
+   async removeTeamFromInstance(instanceZUID: string, teamZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -847,7 +887,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE", payload)
    }
    // Team invites functions
-   async getTeamInvite(teamInviteZUID) {
+   async getTeamInvite(teamInviteZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamInviteGET, {
@@ -859,7 +899,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvites
       return await this.makeRequest(url)
    }
-   async createTeamInvite(teamZUID, inviteeName, inviteeEmail) {
+   async createTeamInvite(teamZUID: string, inviteeName: string, inviteeEmail: string) {
       let payload = JSON.stringify({
          teamZUID,
          inviteeName,
@@ -868,7 +908,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvitesPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async respondToTeamInvite(teamInviteZUID, action) {
+   async respondToTeamInvite(teamInviteZUID: string, action: string) {
       let payload = JSON.stringify({})
 
       let url =
@@ -880,7 +920,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteTeamInvite(teamInviteZUID) {
+   async deleteTeamInvite(teamInviteZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -890,7 +930,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE", payload)
    }
    // Team Members
-   async getTeamMembers(teamZUID) {
+   async getTeamMembers(teamZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamMembersGET, {
@@ -898,7 +938,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async updateTeamMembers(teamZUID, userZUID, admin = false) {
+   async updateTeamMembers(teamZUID: string, userZUID: string, admin: boolean = false) {
       let payload = JSON.stringify({ admin })
 
       let url =
@@ -910,7 +950,7 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteTeamMember(teamZUID, userZUID) {
+   async deleteTeamMember(teamZUID: string, userZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -920,7 +960,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async getTeamMembersPending(teamZUID) {
+   async getTeamMembersPending(teamZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamMembersPendingGET, {
@@ -931,7 +971,7 @@ export default class FetchWrapper {
 
    // Roles
 
-   async getInstanceRoles(instanceZUID) {
+   async getInstanceRoles(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancesRoles, {
@@ -939,7 +979,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async createInstanceRoles(instanceZUID) {
+   async createInstanceRoles(instanceZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -948,7 +988,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "POST", payload)
    }
-   async getInstanceRole(instanceZUID, roleZUID) {
+   async getInstanceRole(instanceZUID: string, roleZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancesRolesGET, {
@@ -958,7 +998,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getRole(roleZUID) {
+   async getRole(roleZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.roleGET, {
@@ -966,7 +1006,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteRole(roleZUID) {
+   async deleteRole(roleZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -975,7 +1015,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async createRole(name, entityZUID, systemRoleZUID) {
+   async createRole(name: string, entityZUID: string, systemRoleZUID: string) {
       let payload = JSON.stringify({
          name,
          entityZUID,
@@ -988,7 +1028,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.roles
       return await this.makeRequest(url)
    }
-   async getUserRoles(userZUID) {
+   async getUserRoles(userZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userRolesGET, {
@@ -996,7 +1036,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async assignUserRole(userZUID, roleZUID) {
+   async assignUserRole(userZUID: string, roleZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1006,7 +1046,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "POST", payload)
    }
-   async deleteUserRole(userZUID, roleZUID) {
+   async deleteUserRole(userZUID: string, roleZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1016,7 +1056,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async updateUserRole(userZUID, roleZUID) {
+   async updateUserRole(userZUID: string, roleZUID: string) {
       let payload = JSON.stringify({ roleZUID })
       let url =
          this.accountsAPIURL +
@@ -1028,7 +1068,7 @@ export default class FetchWrapper {
    }
    // Roles Granular
 
-   async getGranularRole(roleZUID, resourceZUID) {
+   async getGranularRole(roleZUID: string, resourceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.rolesGranularGET, {
@@ -1037,7 +1077,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteGranularRole(roleZUID, resourceZUID) {
+   async deleteGranularRole(roleZUID: string, resourceZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1048,7 +1088,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE", payload)
    }
 
-   async getAllGranularRoles(roleZUID) {
+   async getAllGranularRoles(roleZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.rolesGranular, {
@@ -1057,8 +1097,8 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
    async updateGranularRoles(
-      roleZUID,
-      resourceZUID,
+      roleZUID: string,
+      resourceZUID: string,
       name = "",
       create = true,
       read = true,
@@ -1080,7 +1120,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async createGranularRole(roleZUID, resourceZUID, create = true) {
+   async createGranularRole(roleZUID: string, resourceZUID: string, create = true) {
       let payload = JSON.stringify({ resourceZUID, create })
       let url =
          this.accountsAPIURL +
@@ -1090,12 +1130,12 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "POST", payload)
    }
    // Ecosystems functions
-   async createEcosystem(name, description) {
+   async createEcosystem(name: string, description: string) {
       let payload = JSON.stringify({ name, description })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.ecosystemPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async getEcosystem(ecosystemZUID) {
+   async getEcosystem(ecosystemZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.ecosystemGET, {
@@ -1107,7 +1147,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.ecosystems
       return await this.makeRequest(url)
    }
-   async updateEcosystem(ecosystemZUID, name, description) {
+   async updateEcosystem(ecosystemZUID: string, name: string, description: string) {
       let payload = JSON.stringify({ name, description })
       let url =
          this.accountsAPIURL +
@@ -1117,7 +1157,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
    async updateEcosystemDBDefaults(
-      ecosystemZUID,
+      ecosystemZUID: string,
       defaultDatabaseHost = "1.1.1.1",
       defaultDatabaseUser = "root",
       defaultDatabasePassword = "pass",
@@ -1136,7 +1176,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
    async updateEcosystemCDNDefaults(
-      ecosystemZUID,
+      ecosystemZUID: string,
       defaultCDNType = "AKAMAI",
       defaultCDNPurgeURL = "https://location-of-cloud-purge-function.com",
       defaultCDNPurgeAuth = "Secret Key",
@@ -1154,7 +1194,7 @@ export default class FetchWrapper {
          `?action=updateCDNDefaults`
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteEcosystem(ecosystemZUID) {
+   async deleteEcosystem(ecosystemZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1165,12 +1205,12 @@ export default class FetchWrapper {
    }
    // Webhook functions
    async createWebhook(
-      scopedResource,
-      parentResourceZUID,
+      scopedResource: string,
+      parentResourceZUID: string,
       resource = "items",
       eventAction = 1,
       method = "GET",
-      URL,
+      URL: string,
       contentType = "application/json",
       text = "",
    ) {
@@ -1189,7 +1229,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.webhooksPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async retrieveWebhook(webhookZUID) {
+   async retrieveWebhook(webhookZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.webhookGET, {
@@ -1197,7 +1237,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async retrieveWebhookForInstance(instanceZUID) {
+   async retrieveWebhookForInstance(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceWebhookGET, {
@@ -1205,7 +1245,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async deleteWebhook(webhookZUID) {
+   async deleteWebhook(webhookZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1216,7 +1256,7 @@ export default class FetchWrapper {
    }
 
    // Tokens Functions
-   async createToken(roleZUID, name) {
+   async createToken(roleZUID: string, name: string) {
       let payload = JSON.stringify({
          roleZUID,
          name,
@@ -1224,7 +1264,7 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.tokensPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async getToken(tokenZUID) {
+   async getToken(tokenZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.tokensGET, {
@@ -1232,7 +1272,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async getInstanceToken(instanceZUID) {
+   async getInstanceToken(instanceZUID: string) {
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instanceTokenGET, {
@@ -1240,7 +1280,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async updateToken(tokenZUID) {
+   async updateToken(tokenZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
@@ -1249,7 +1289,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async deleteToken(tokenZUID) {
+   async deleteToken(tokenZUID: string) {
       let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
