@@ -22,7 +22,7 @@ A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a bac
 
 </div>
 
-# ⚡ Getting Started
+## ⚡ Getting Started
 
 Include the fetch wrapper into your project
 
@@ -33,7 +33,7 @@ Include the fetch wrapper into your project
 ></script>
 ```
 
-# 🚀 Example Usage
+## 🚀 Example Usage
 
 For this wrapper to run, you need an authenticated Zesty.io user APP_SID and a Instance ZUID
 
@@ -46,7 +46,7 @@ const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID)
 console.log(ZestyAPI.getModels())
 ```
 
-# 🎯 Features
+## 🎯 Features
 
 ### API Service the Wrapper can Access
 
@@ -57,7 +57,7 @@ console.log(ZestyAPI.getModels())
 
 Note all endpoints are ported. If you wish to port any missing endpoints, create a fork and pull request.
 
-# 💡 How to run in Development
+## 💡 How to run in Development
 
 ```jsx
 npm start
@@ -69,7 +69,7 @@ then add this in the head of Html
 <script async src="http://localhost:8080/index.js"></script>
 ```
 
-# 💡 Use in Development Mode
+## 💡 Use in Development Mode
 
 To access dev and stage api url for zesty development, pass options to the instantation like so:
 
@@ -88,13 +88,13 @@ const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID, {
 console.log(ZestyAPI.getModels())
 ```
 
-# 💡 When commiting to github use
+## 💡 When commiting to github use
 
 ```jsx
 npm run commit
 ```
 
-# 💡 Bulding in Production
+## 💡 Bulding in Production
 
 -  Automated
 
@@ -106,6 +106,6 @@ npm run commit
 git checkout main && npm run build && npm run release
 ```
 
-# 🖥️ Code Contributors
+## 🖥️ Code Contributors
 
   <img src ="https://contrib.rocks/image?repo=zesty-io/fetch-wrapper"/>
