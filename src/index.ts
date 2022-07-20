@@ -1,3 +1,3 @@
-import FetchWrapper from "./FetchWrapper";
+import FetchWrapper from "./FetchWrapper"
 
-export { FetchWrapper };
+export { FetchWrapper }
