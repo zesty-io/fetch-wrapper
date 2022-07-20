@@ -1,6 +1,10 @@
+<div align="center">
+
 <img src="https://brand.zesty.io/zesty-io-logo-horizontal.png" height="100" alt="zesty logo" />
 
 # Zesty.io API Fetch Wrapper
+
+</div>
 
 A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a backend node wrapper, use the [Zesty.io Node SDK](https://www.npmjs.com/package/@zesty-io/sdk)
 
@@ -85,3 +89,9 @@ npm run commit
 ```jsx
 git checkout main && npm run build && npm run release
 ```
+
+# 🖥️ Code Contributors
+
+<a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
+  <img src ="https://contrib.rocks/image?repo=zesty-io/fetch-wrapper"/>
+</a>
