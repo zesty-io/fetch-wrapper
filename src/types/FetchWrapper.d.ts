@@ -147,5 +147,6 @@ export default class FetchWrapper {
     getInstanceToken(instanceZUID: string): Promise<any>;
     updateToken(tokenZUID: string): Promise<any>;
     deleteToken(tokenZUID: string): Promise<any>;
+    searchItems(): Promise<any>;
 }
 export {};

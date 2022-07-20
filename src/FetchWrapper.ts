@@ -177,6 +177,8 @@ export default class FetchWrapper {
          nav: "/env/nav",
          headtags: "/web/headtags",
          audits: "/env/audits",
+         // Seach Items
+         searchItemsGET: "/search/items",
       }
 
       this.mediaAPIEndpoints = {
@@ -1297,5 +1299,11 @@ export default class FetchWrapper {
             TOKEN_ZUID: tokenZUID,
          })
       return await this.makeRequest(url, "DELETE", payload)
+   }
+
+   // Search Items Function
+   async searchItems() {
+      let url = this.instancesAPIURL + this.instanceAPIEndpoints.searchItemsGET
+      return await this.makeRequest(url)
    }
 }
