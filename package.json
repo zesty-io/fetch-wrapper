@@ -13,7 +13,7 @@
       "format": "prettier --write .",
       "test-all": "npm run check-format && npm run check-lint && npm run check-types",
       "release": "release-it --no-npm",
-      "test": "jest",
+      "test": "jest --forceExit",
       "test-dev": "jest --watch "
    },
    "types": "src/types/FetchWrapper.d.ts",
