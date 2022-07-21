@@ -169,4 +169,15 @@ export interface ImediaAPIEndpoints {
 }
 export interface IauthAPIEndpoints {
    verify: string
+   login: string
+   verify2fa: string
+   logout: string
+}
+export interface IParams {
+   headers: any
+   method: string
+   mode: RequestMode
+   referrerPolicy: ReferrerPolicy
+   credentials: RequestCredentials
+   body: any
 }
