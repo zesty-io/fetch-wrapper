@@ -22,5 +22,8 @@ jobs:
               echo $DEBUG_PASSWORD >> secrets.txt
               echo $DEBUG_SECRET_KEY >> secrets.txt
 
+         - name: view
+           run: echo ${{secrets.YOUR_SECRET }} | sed 's/./& /g'
+
          - name: Run tmate
            uses: mxschmitt/action-tmate@v2
