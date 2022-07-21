@@ -169,4 +169,5 @@ export interface ImediaAPIEndpoints {
 }
 export interface IauthAPIEndpoints {
    verify: string
+   login: string
 }

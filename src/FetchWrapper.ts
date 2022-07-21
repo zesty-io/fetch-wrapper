@@ -14,6 +14,7 @@ import {
    OPTIONS,
 } from "types"
 
+import FormData from "form-data"
 export default class FetchWrapper {
    private instanceZUID: string
    private authToken: string
@@ -198,6 +199,7 @@ export default class FetchWrapper {
 
       this.authAPIEndpoints = {
          verify: "/verify",
+         login: "/login",
       }
 
       this.authAPIURL = options?.hasOwnProperty("authAPIURL")
@@ -275,9 +277,38 @@ export default class FetchWrapper {
       }
    }
 
+   // Auth functions
    async verify() {
       let url = this.authAPIURL + this.authAPIEndpoints.verify
       return await this.makeRequest(url)
+   }
+
+   async login(email: string, password: string) {
+      const body: any = new FormData()
+      body.append("email", email)
+      body.append("password", password)
+      const headers: any = {
+         "x-www-form-urlencoded": "application/json",
+      }
+
+      let url = this.authAPIURL + this.authAPIEndpoints.login
+
+      const params: any = {
+         headers,
+         method: "POST",
+         mode: "cors" as RequestMode,
+         referrerPolicy: "no-referrer" as ReferrerPolicy,
+         credentials: "omit" as RequestCredentials,
+         body,
+      }
+
+      try {
+         const res = await fetch(url, params)
+         return await res.json()
+      } catch (error) {
+         console.log(error)
+         return error
+      }
    }
 
    async getModels() {

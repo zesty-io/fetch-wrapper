@@ -11,7 +11,6 @@ jobs:
       env:
          userAppSID: ${{ secrets.userAppSID }}
          instanceZUID: ${{ secrets.instanceZUID }}
-         secret1: ${{ secrets }}
       steps:
          - uses: actions/checkout@v2
 

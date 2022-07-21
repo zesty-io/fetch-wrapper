@@ -6,7 +6,6 @@ const userAppSID = process.env.userAppSID
 const instanceZUID = process.env.instanceZUID
 
 describe("Fetchwrapper functions testing ", () => {
-   console.log(process.env, "#######################################")
    const ZestyAPI = new FetchWrapper(instanceZUID, userAppSID)
    it("verify --- expect 200 code", async () => {
       const res = await ZestyAPI.verify()
@@ -33,4 +32,9 @@ describe("Fetchwrapper functions testing ", () => {
       expect(res.data).toBeTruthy()
       expect(res.error).toBeFalsy()
    })
+   it("login --- expect unauthorized ", async () => {
+      const res = await ZestyAPI.login("test", "testpass")
+      expect(res.status).toBe("Unauthorized")
+      expect(res.error).toBeFalsy()
+   }, 30000)
 })
