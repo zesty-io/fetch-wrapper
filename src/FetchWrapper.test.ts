@@ -37,4 +37,9 @@ describe("Fetchwrapper functions testing ", () => {
       expect(res.status).toBe("Unauthorized")
       expect(res.error).toBeFalsy()
    }, 30000)
+   it("verify2fa --- expect unauthorized ", async () => {
+      const res = await ZestyAPI.verify2FA("test")
+      expect(res.status).toBe("Unauthorized")
+      expect(res.error).toBeFalsy()
+   }, 30000)
 })

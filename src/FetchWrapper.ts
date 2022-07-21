@@ -202,6 +202,7 @@ export default class FetchWrapper {
       this.authAPIEndpoints = {
          verify: "/verify",
          login: "/login",
+         verify2fa: "/verify-2fa",
       }
 
       this.authAPIURL = options?.hasOwnProperty("authAPIURL")
@@ -301,6 +302,20 @@ export default class FetchWrapper {
       }
    }
 
+   async verify2FA(mfaToken: string) {
+      let url = this.authAPIURL + this.authAPIEndpoints.verify2fa
+      const body: any = new FormData()
+      body.append("token", mfaToken)
+
+      const params = customParams(body, "POST")
+      try {
+         const res = await fetch(url, params)
+         return await res.json()
+      } catch (error) {
+         console.log(error)
+         return error
+      }
+   }
    async getModels() {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.models
       return await this.makeRequest(url)

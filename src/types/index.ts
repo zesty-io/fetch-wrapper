@@ -170,6 +170,7 @@ export interface ImediaAPIEndpoints {
 export interface IauthAPIEndpoints {
    verify: string
    login: string
+   verify2fa: string
 }
 export interface IParams {
    headers: any
