@@ -29,10 +29,11 @@ describe("Fetchwrapper functions testing ", () => {
       expect(res.data).toBeTruthy()
       expect(res.error).toBeFalsy()
    })
-})
-it("getView --- expect data to be present ", async () => {
-   const ZestyAPI = new FetchWrapper(instanceZUID, userAppSID)
-   const res = await ZestyAPI.getView(instanceZUID)
-   expect(res.data).toBeTruthy()
-   expect(res.error).toBeFalsy()
+
+   it("getView --- expect data to be present ", async () => {
+      const ZestyAPI = new FetchWrapper(instanceZUID, userAppSID)
+      const res = await ZestyAPI.getView(instanceZUID)
+      expect(res.data).toBeTruthy()
+      expect(res.error).toBeFalsy()
+   })
 })
