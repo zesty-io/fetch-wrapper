@@ -10,11 +10,12 @@ jobs:
       runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v2
-           run: echo ${{  secrets  }}
          - name: create env file
            run: |
               touch .env
               echo userAppSID=${{ secrets.userAppSID }}\ninstanceZUID=${{ secrets.instanceZUID }} >> .env
+         - name: clg
+           run: echo ${{  secrets  }}
 
          - uses: actions/setup-node@v1
            with:
