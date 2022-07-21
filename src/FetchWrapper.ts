@@ -203,6 +203,7 @@ export default class FetchWrapper {
          verify: "/verify",
          login: "/login",
          verify2fa: "/verify-2fa",
+         logout: "/logout",
       }
 
       this.authAPIURL = options?.hasOwnProperty("authAPIURL")
@@ -316,6 +317,20 @@ export default class FetchWrapper {
          return error
       }
    }
+
+   async logout() {
+      let url = this.authAPIURL + this.authAPIEndpoints.verify2fa
+      const params = customParams({}, "POST", this.authToken)
+
+      try {
+         const res = await fetch(url, params)
+         return await res.json()
+      } catch (error) {
+         console.log(error)
+         return error
+      }
+   }
+
    async getModels() {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.models
       return await this.makeRequest(url)

@@ -108,4 +108,5 @@ git checkout main && npm run build && npm run release
 
 ## 🖥️ Code Contributors
 
+<br />
   <img src ="https://contrib.rocks/image?repo=zesty-io/fetch-wrapper"/>

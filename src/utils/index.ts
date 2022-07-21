@@ -1,16 +1,20 @@
 import { IParams } from "types"
 
-export const customParams = (body = {}, method = "POST"): IParams => {
+export const customParams = (body = {}, method = "POST", token?: string): IParams => {
    const headers: any = {
       "x-www-form-urlencoded": "application/json",
+   }
+
+   if (token) {
+      headers["Authorization"] = `Bearer ${token}`
    }
 
    const params: IParams = {
       headers,
       method,
-      mode: "cors" as RequestMode,
-      referrerPolicy: "no-referrer" as ReferrerPolicy,
-      credentials: "omit" as RequestCredentials,
+      mode: "cors",
+      referrerPolicy: "no-referrer",
+      credentials: "omit",
       body,
    }
    return params

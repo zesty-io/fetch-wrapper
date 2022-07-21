@@ -171,6 +171,7 @@ export interface IauthAPIEndpoints {
    verify: string
    login: string
    verify2fa: string
+   logout: string
 }
 export interface IParams {
    headers: any
