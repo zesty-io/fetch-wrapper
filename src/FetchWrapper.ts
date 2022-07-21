@@ -15,6 +15,8 @@ import {
 } from "types"
 
 import FormData from "form-data"
+import { customParams } from "./utils/index"
+
 export default class FetchWrapper {
    private instanceZUID: string
    private authToken: string
@@ -284,24 +286,12 @@ export default class FetchWrapper {
    }
 
    async login(email: string, password: string) {
+      let url = this.authAPIURL + this.authAPIEndpoints.login
       const body: any = new FormData()
       body.append("email", email)
       body.append("password", password)
-      const headers: any = {
-         "x-www-form-urlencoded": "application/json",
-      }
 
-      let url = this.authAPIURL + this.authAPIEndpoints.login
-
-      const params: any = {
-         headers,
-         method: "POST",
-         mode: "cors" as RequestMode,
-         referrerPolicy: "no-referrer" as ReferrerPolicy,
-         credentials: "omit" as RequestCredentials,
-         body,
-      }
-
+      const params = customParams(body, "POST")
       try {
          const res = await fetch(url, params)
          return await res.json()

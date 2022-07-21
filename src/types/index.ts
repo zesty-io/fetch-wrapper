@@ -171,3 +171,11 @@ export interface IauthAPIEndpoints {
    verify: string
    login: string
 }
+export interface IParams {
+   headers: any
+   method: string
+   mode: RequestMode
+   referrerPolicy: ReferrerPolicy
+   credentials: RequestCredentials
+   body: any
+}
