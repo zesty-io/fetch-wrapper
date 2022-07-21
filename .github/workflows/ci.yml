@@ -9,8 +9,8 @@ jobs:
    end-to-end-tests:
       runs-on: ubuntu-latest
       env:
-         userAppSID: ${{ secrets.userAppSID }}
-         instanceZUID: ${{ secrets.instanceZUID }}
+         userAppSID: ${{ secrets.APP_SID }}
+         instanceZUID: ${{ secrets.INSTANCE_ZUID }}
       steps:
          - uses: actions/checkout@v2
 
