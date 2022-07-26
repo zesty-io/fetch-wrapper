@@ -679,15 +679,15 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.usersPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateUser(userZUID: string) {
-      let payload = JSON.stringify({})
+   async updateUser(userZUID: string, body: any, params: string = "") {
+      let payload = JSON.stringify(body)
 
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userPUT, {
             USER_ZUID: userZUID,
          }) +
-         "?action=updatePassword"
+         params
 
       return await this.makeRequest(url, "PUT", payload)
    }
