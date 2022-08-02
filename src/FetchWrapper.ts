@@ -336,6 +336,11 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
+   async getModelItems(zuid:string) {
+      let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.items.replace("MODEL_ZUID",zuid)
+      return await this.makeRequest(url)
+   }
+
    async getViews() {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.views
       return await this.makeRequest(url)
