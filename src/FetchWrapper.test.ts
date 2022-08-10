@@ -42,4 +42,9 @@ describe("🎯🎯🎯 Fetchwrapper functions testing 🎯🎯🎯", () => {
       expect(res.status).toBe("Unauthorized")
       expect(res.error).toBeFalsy()
    }, 30000)
+   it("getall teams --- expect data to be present ", async () => {
+      const res = await ZestyAPI.getAllTeams()
+      expect(res.data).toBeTruthy()
+      expect(res.error).toBeFalsy()
+   })
 })
