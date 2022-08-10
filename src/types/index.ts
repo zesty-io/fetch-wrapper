@@ -181,3 +181,13 @@ export interface IParams {
    credentials: RequestCredentials
    body: any
 }
+
+export interface ICreateTeam {
+   Name: string
+   Description: string
+}
+
+export interface IUpdateTeam {
+   name: string
+   description: string
+}

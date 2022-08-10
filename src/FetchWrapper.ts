@@ -8,9 +8,11 @@
 import {
    IaccountsAPIEndpoints,
    IauthAPIEndpoints,
+   ICreateTeam,
    IinstanceAPIEndpoints,
    ImediaAPIEndpoints,
    IsiteServicesEndpoints,
+   IUpdateTeam,
    OPTIONS,
 } from "types"
 
@@ -336,8 +338,10 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getModelItems(zuid:string) {
-      let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.items.replace("MODEL_ZUID",zuid)
+   async getModelItems(zuid: string) {
+      let url =
+         this.getInstanceAPIURL() +
+         this.instanceAPIEndpoints.items.replace("MODEL_ZUID", zuid)
       return await this.makeRequest(url)
    }
 
@@ -872,15 +876,17 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async createTeam(Name: string) {
+   async createTeam(data: ICreateTeam) {
+      const { Name, Description } = data
       let payload = JSON.stringify({
          Name,
+         Description,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateTeam(name: string, teamZUID: string) {
-      let payload = JSON.stringify({ name })
+   async updateTeam(data: IUpdateTeam, teamZUID: string) {
+      let payload = JSON.stringify(data)
 
       let url =
          this.accountsAPIURL +
