@@ -191,3 +191,8 @@ export interface IUpdateTeam {
    name: string
    description: string
 }
+export interface ICreateTeamInvite {
+   teamZUID: string
+   admin: boolean
+   inviteeEmail: string
+}

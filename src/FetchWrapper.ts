@@ -9,6 +9,7 @@ import {
    IaccountsAPIEndpoints,
    IauthAPIEndpoints,
    ICreateTeam,
+   ICreateTeamInvite,
    IinstanceAPIEndpoints,
    ImediaAPIEndpoints,
    IsiteServicesEndpoints,
@@ -962,12 +963,8 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvites
       return await this.makeRequest(url)
    }
-   async createTeamInvite(teamZUID: string, inviteeName: string, inviteeEmail: string) {
-      let payload = JSON.stringify({
-         teamZUID,
-         inviteeName,
-         inviteeEmail,
-      })
+   async createTeamInvite(data: ICreateTeamInvite) {
+      let payload = JSON.stringify(data)
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamInvitesPOST
       return await this.makeRequest(url, "POST", payload)
    }
