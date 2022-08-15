@@ -1364,4 +1364,31 @@ export default class FetchWrapper {
       let url = this.instancesAPIURL + this.instanceAPIEndpoints.searchItemsGET
       return await this.makeRequest(url)
    }
+
+   // Locales
+   async getLocales(type: string = "all") {
+      let url = `${this.instancesAPIURL}/env/langs?type=${type}`
+      return await this.makeRequest(url)
+   }
+
+   async addLocale(locale: string) {
+      let url = `${this.instancesAPIURL}/env/langs`
+      return await this.makeRequest(
+         url,
+         "POST",
+         JSON.stringify({
+            code: locale,
+         }),
+      )
+   }
+
+   async deleteLocale(locale: string, isSoftDelete = true) {
+      let url = `${this.instancesAPIURL}/env/langs/${locale}?softDelete=${isSoftDelete}`
+      return await this.makeRequest(url, "DELETE")
+   }
+
+   async updateLocale(locale: string, action: string) {
+      let url = `${this.instancesAPIURL}/env/langs/${locale}?action=${action}`
+      return await this.makeRequest(url, "PUT")
+   }
 }
