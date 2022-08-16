@@ -1340,13 +1340,15 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url)
    }
-   async updateToken(tokenZUID: string) {
+   async updateToken(tokenZUID: string, action: string) {
       let payload = JSON.stringify({})
+      const params = action ? `?action=${action}` : ""
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.tokensPUT, {
             TOKEN_ZUID: tokenZUID,
-         })
+         }) +
+         params
       return await this.makeRequest(url, "PUT", payload)
    }
    async deleteToken(tokenZUID: string) {
