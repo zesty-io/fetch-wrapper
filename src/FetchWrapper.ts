@@ -1365,7 +1365,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   // Locales
+   // Locales functionality
    async getLocales(type: string = "all") {
       let url = `${this.instancesAPIURL}/env/langs?type=${type}`
       return await this.makeRequest(url)
