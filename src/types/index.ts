@@ -204,7 +204,7 @@ export interface ICreateWebhook {
    eventAction: number
    method: string
    URL: string
-   contentType: string
+   contentType?: string
    authorization?: string
    text: string
 }
