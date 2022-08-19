@@ -196,3 +196,15 @@ export interface ICreateTeamInvite {
    admin: boolean
    inviteeEmail: string
 }
+
+export interface ICreateWebhook {
+   scopedResource: string
+   parentResourceZUID?: string
+   resource: string
+   eventAction: number
+   method: string
+   URL: string
+   contentType?: string
+   authorization?: string
+   text: string
+}
