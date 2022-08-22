@@ -2,7 +2,7 @@ test:
    - src/**/*.test.ts
 
 source:
-   - any: ["src/**/*"]
+   - any: ["src/*"]
 
 # e2e:
 #    - any: ["cypress/**/*"]
