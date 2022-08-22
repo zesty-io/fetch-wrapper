@@ -240,6 +240,9 @@ export default class FetchWrapper {
    setInstanceZUID(zuid: string) {
       return (this.instanceZUID = zuid)
    }
+   setToken(authToken: string) {
+      return (this.authToken = authToken)
+   }
 
    buildAPIURL(uri: string, api = "instances") {
       switch (api) {
@@ -311,10 +314,20 @@ export default class FetchWrapper {
       const body: any = new FormData()
       body.append("token", mfaToken)
 
-      const params = customParams(body, "POST")
+      const params = customParams(body, "POST", this.authToken)
       try {
          const res = await fetch(url, params)
          return await res.json()
+      } catch (error) {
+         console.log(error)
+         return error
+      }
+   }
+
+   async verify2FAAuto() {
+      let url = this.authAPIURL + this.authAPIEndpoints.verify2fa
+      try {
+         return await this.makeRequest(url, "GET", this.authToken)
       } catch (error) {
          console.log(error)
          return error
