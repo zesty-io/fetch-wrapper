@@ -10,6 +10,7 @@ import {
    IauthAPIEndpoints,
    ICreateTeam,
    ICreateTeamInvite,
+   ICreateWebhook,
    IinstanceAPIEndpoints,
    ImediaAPIEndpoints,
    IsiteServicesEndpoints,
@@ -1277,16 +1278,17 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE", payload)
    }
    // Webhook functions
-   async createWebhook(
-      scopedResource: string,
-      parentResourceZUID: string,
+   async createWebhook({
+      scopedResource,
+      parentResourceZUID,
       resource = "items",
       eventAction = 1,
       method = "GET",
-      URL: string,
+      URL,
       contentType = "application/json",
+      authorization = "",
       text = "",
-   ) {
+   }: ICreateWebhook) {
       let payload = JSON.stringify({
          scopedResource,
          parentResourceZUID,
@@ -1295,6 +1297,7 @@ export default class FetchWrapper {
          method,
          URL,
          contentType,
+         authorization,
          body: {
             text,
          },
