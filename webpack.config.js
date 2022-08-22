@@ -45,5 +45,14 @@ module.exports = {
          },
       ],
    },
-   plugins: [new CleanWebpackPlugin(), new Dotenv(), new WebpackBar()],
+   plugins: [
+      new CleanWebpackPlugin(),
+      new Dotenv(),
+      new WebpackBar({
+         name: "Zesty-io FetchWrapper...",
+         color: "#C123AB",
+         profile: true,
+         fancy: true,
+      }),
+   ],
 }
