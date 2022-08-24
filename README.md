@@ -16,11 +16,11 @@
 
 </div>
 
-<div align="center">
+<p align="center">
 
 A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a backend node wrapper, use the [Zesty.io Node SDK](https://www.npmjs.com/package/@zesty-io/sdk)
 
-</div>
+</p>
 
 ## ⚡ Getting Started
 
@@ -57,9 +57,9 @@ console.log(ZestyAPI.getModels())
 
 Note all endpoints are ported. If you wish to port any missing endpoints, create a fork and pull request.
 
-## 💡 How to run in Development
+## 💡 Running locally
 
--  ### 🗒️ Clone this repository
+-  ### 🙂 Using npm install
 
 ```jsx
 npm install && npm start
