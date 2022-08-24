@@ -2,6 +2,7 @@ const path = require("path")
 const TerserPlugin = require("terser-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
+const WebpackBar = require("webpackbar")
 
 module.exports = {
    entry: path.resolve(__dirname, "src/index.ts"),
@@ -44,5 +45,14 @@ module.exports = {
          },
       ],
    },
-   plugins: [new CleanWebpackPlugin(), new Dotenv()],
+   plugins: [
+      new CleanWebpackPlugin(),
+      new Dotenv(),
+      new WebpackBar({
+         name: "🚀🚀🚀 Zesty-io FetchWrapper 🚀🚀🚀",
+         color: "#C123AB",
+         profile: true,
+         fancy: true,
+      }),
+   ],
 }

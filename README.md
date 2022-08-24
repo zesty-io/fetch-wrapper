@@ -59,8 +59,27 @@ Note all endpoints are ported. If you wish to port any missing endpoints, create
 
 ## 💡 How to run in Development
 
+### 🗒️ Clone this repository
+
 ```jsx
 npm start
+```
+
+then add this in the head of Html
+
+```jsx
+<script async src="http://localhost:8080/index.js"></script>
+```
+
+### 🐳 Using Docker
+
+```jsx
+docker build -t fetchWrapper .
+```
+
+```jsx
+docker run -p 8080:8080 fetchWrapper
+
 ```
 
 then add this in the head of Html
