@@ -1117,13 +1117,13 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async updateUserRole(userZUID: string, roleZUID: string) {
-      let payload = JSON.stringify({ roleZUID })
+   async updateUserRole(userZUID: string, oldRoleZUID: string, newRoleZUID: string) {
+      let payload = JSON.stringify({ roleZUID: newRoleZUID })
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.userRolesPUT, {
             USER_ZUID: userZUID,
-            ROLE_ZUID: roleZUID,
+            ROLE_ZUID: oldRoleZUID,
          })
       return await this.makeRequest(url, "PUT", payload)
    }
