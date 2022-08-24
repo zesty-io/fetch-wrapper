@@ -16,11 +16,11 @@
 
 </div>
 
-<p align="center">
+<div align="center">
 
 A javascript fetch wrapper for the Zesty.io APIs for frontend clients. For a backend node wrapper, use the [Zesty.io Node SDK](https://www.npmjs.com/package/@zesty-io/sdk)
 
-</p>
+</div>
 
 ## ⚡ Getting Started
 
