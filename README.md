@@ -107,13 +107,13 @@ const ZestyAPI = new Zesty.FetchWrapper(instanceZUID, userAppSID, {
 console.log(ZestyAPI.getModels())
 ```
 
-## ✅ When commiting to github use
+## 💡 When commiting to github use
 
 ```jsx
 npm run commit
 ```
 
-## ✅ Bulding in Production
+## 💡 Bulding in Production
 
 -  Automated
 

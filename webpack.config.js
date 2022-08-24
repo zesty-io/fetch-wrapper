@@ -49,7 +49,7 @@ module.exports = {
       new CleanWebpackPlugin(),
       new Dotenv(),
       new WebpackBar({
-         name: "Zesty-io FetchWrapper...",
+         name: "🚀🚀🚀 Zesty-io FetchWrapper 🚀🚀🚀",
          color: "#C123AB",
          profile: true,
          fancy: true,
