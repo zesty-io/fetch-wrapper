@@ -81,6 +81,7 @@ export default class FetchWrapper {
          userEmailsGET: "/users/emails",
          userEmailVerifyGET: "/users/emails/verifications",
          userEmailVerifyPOST: "/users/emails/verifications",
+         userForgotPassword: "/users/passwords/resets",
          // Companies
          companyGET: "/companies/COMPANY_ZUID",
          companies: "/companies",
@@ -758,6 +759,12 @@ export default class FetchWrapper {
          this.accountsAPIURL +
          this.accountsAPIEndpoints.userEmailVerifyPOST +
          `?address=${address}`
+      return await this.makeRequest(url, "POST", payload)
+   }
+
+   async userForgotPassword(address: string) {
+      let payload = JSON.stringify({ address })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.userForgotPassword
       return await this.makeRequest(url, "POST", payload)
    }
    // Companies functions
