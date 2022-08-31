@@ -624,9 +624,10 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "DELETE")
    }
    // Domains
-   async createDomain(instanceZUID: string, domain: string) {
+   async createDomain(instanceZUID: string, domain: string, branch: string) {
       let payload = JSON.stringify({
          domain,
+         branch,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.domainPOST
       return await this.makeRequest(url, "POST", payload)
