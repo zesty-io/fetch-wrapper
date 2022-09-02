@@ -82,6 +82,7 @@ export default class FetchWrapper {
          userEmailVerifyGET: "/users/emails/verifications",
          userEmailVerifyPOST: "/users/emails/verifications",
          userForgotPassword: "/users/passwords/resets",
+         userResetPasswordConfirm: "/password-reset",
          // Companies
          companyGET: "/companies/COMPANY_ZUID",
          companies: "/companies",
@@ -766,6 +767,12 @@ export default class FetchWrapper {
    async userForgotPassword(address: string) {
       let payload = JSON.stringify({ address })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.userForgotPassword
+      return await this.makeRequest(url, "POST", payload)
+   }
+
+   async userResetPasswordConfirm(address: string, password: string, token: string) {
+      let payload = JSON.stringify({ code: token, email: address, password })
+      let url = this.accountsAPIURL + this.accountsAPIEndpoints.userResetPasswordConfirm
       return await this.makeRequest(url, "POST", payload)
    }
    // Companies functions

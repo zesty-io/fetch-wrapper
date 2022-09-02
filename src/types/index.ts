@@ -75,6 +75,7 @@ export interface IaccountsAPIEndpoints {
    userEmailVerifyGET: string
    userEmailVerifyPOST: string
    userForgotPassword: string
+   userResetPasswordConfirm: string
 
    // Companies
    companyGET: string
