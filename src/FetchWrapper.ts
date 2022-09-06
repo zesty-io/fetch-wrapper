@@ -282,8 +282,9 @@ export default class FetchWrapper {
 
       try {
          const res = await fetch(url, options)
+         const status = res.status
          const json = await res.json()
-         return json
+         return { ...json, status }
       } catch (err) {
          console.error("Error:", err)
          return err
@@ -907,10 +908,10 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
    async createTeam(data: ICreateTeam) {
-      const { Name, Description } = data
+      const { name, description } = data
       let payload = JSON.stringify({
-         Name,
-         Description,
+         name,
+         description,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.teamPOST
       return await this.makeRequest(url, "POST", payload)
@@ -998,7 +999,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "POST", payload)
    }
    async respondToTeamInvite(teamInviteZUID: string, action: string) {
-      let payload = JSON.stringify({})
+      let payload = JSON.stringify({ action })
 
       let url =
          this.accountsAPIURL +
@@ -1040,14 +1041,13 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT", payload)
    }
    async deleteTeamMember(teamZUID: string, userZUID: string) {
-      let payload = JSON.stringify({})
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.teamMembersDELETE, {
             TEAM_ZUID: teamZUID,
             USER_ZUID: userZUID,
          })
-      return await this.makeRequest(url, "DELETE", payload)
+      return await this.makeRequest(url, "DELETE")
    }
    async getTeamMembersPending(teamZUID: string) {
       let url =

@@ -186,8 +186,8 @@ export interface IParams {
 }
 
 export interface ICreateTeam {
-   Name: string
-   Description: string
+   name: string
+   description: string
 }
 
 export interface IUpdateTeam {
