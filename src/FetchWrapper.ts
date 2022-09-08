@@ -339,12 +339,9 @@ export default class FetchWrapper {
    }
 
    async logout() {
-      let url = this.authAPIURL + this.authAPIEndpoints.verify2fa
-      const params = customParams({}, "POST", this.authToken)
-
+      let url = this.authAPIURL + this.authAPIEndpoints.logout
       try {
-         const res = await fetch(url, params)
-         return await res.json()
+         return await this.makeRequest(url, "GET", this.authToken)
       } catch (error) {
          console.log(error)
          return error
@@ -1399,6 +1396,12 @@ export default class FetchWrapper {
    }
 
    // Locales functionality
+
+   async getAllLocales() {
+      let url = `${this.instancesAPIURL}/env/langs/all`
+      return await this.makeRequest(url)
+   }
+
    async getLocales(type: string = "all") {
       let url = `${this.instancesAPIURL}/env/langs?type=${type}`
       return await this.makeRequest(url)
