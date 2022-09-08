@@ -353,6 +353,12 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
+   async getInstanceAudit() {
+      let url =
+         this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=10000`
+      return await this.makeRequest(url)
+   }
+
    async getModelItems(zuid: string) {
       let url =
          this.getInstanceAPIURL() +
