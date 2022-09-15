@@ -634,7 +634,11 @@ export default class FetchWrapper {
          domain,
          branch,
       })
-      let url = this.accountsAPIURL + this.accountsAPIEndpoints.domainPOST
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.domainPOST, {
+            INSTANCE_ZUID: instanceZUID,
+         })
       return await this.makeRequest(url, "POST", payload)
    }
    async updateDomain(instanceZUID: string, domainZUID: string, domain: string) {
