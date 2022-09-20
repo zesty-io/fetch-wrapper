@@ -359,6 +359,16 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
+   // setting initially the zuid to avoid issues of not getting properly the data
+   async getInstanceAuditInitZUID(limit: number = 20, zuid: string) {
+      if (zuid) this.setInstanceZUID(zuid)
+      let url =
+         this.getInstanceAPIURL().replace("undefined", zuid) +
+         this.instanceAPIEndpoints.audits +
+         `?limit=${limit}`
+      return await this.makeRequest(url)
+   }
+
    async getModelItems(zuid: string) {
       let url =
          this.getInstanceAPIURL() +
