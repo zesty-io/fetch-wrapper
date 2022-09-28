@@ -361,11 +361,18 @@ export default class FetchWrapper {
 
    // setting initially the zuid to avoid issues of not getting properly the data
    async getInstanceAuditInitZUID(limit: number = 20, zuid: string) {
-      if (zuid) this.setInstanceZUID(zuid)
-      let url =
-         this.getInstanceAPIURL().replace("undefined", zuid) +
-         this.instanceAPIEndpoints.audits +
-         `?limit=${limit}`
+      let url = ""
+      if (this.getInstanceAPIURL().includes("undefined")) {
+         url = this.getInstanceAPIURL().replace("undefined", zuid)
+      } else {
+         const getZuidInURL = this.getInstanceAPIURL().substring(
+            8,
+            this.getInstanceAPIURL().indexOf(".api"),
+         )
+         url = this.getInstanceAPIURL().replace(getZuidInURL, zuid)
+      }
+
+      url = url + this.instanceAPIEndpoints.audits + `?limit=${limit}`
       return await this.makeRequest(url)
    }
 
