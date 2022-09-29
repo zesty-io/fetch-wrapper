@@ -282,7 +282,7 @@ export default class FetchWrapper {
       options.method = method
       options.headers = {
          "Content-Type": "application/json",
-         Authorization: `Bearer ${token || this.authToken}`,
+         Authorization: `Bearer ${token !== "" ? token : this.authToken}`,
       }
       options.credentials = "same-origin"
 
