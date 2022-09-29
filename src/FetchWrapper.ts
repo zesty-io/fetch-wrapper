@@ -1460,4 +1460,20 @@ export default class FetchWrapper {
       let url = `${this.instancesAPIURL}/env/langs/${locale}?action=${action}`
       return await this.makeRequest(url, "PUT")
    }
+
+   async appendURI(uri: string, zuid: string) {
+      let url = ""
+      if (this.getInstanceAPIURL().includes("undefined")) {
+         url = this.getInstanceAPIURL().replace("undefined", zuid)
+      } else {
+         const getZuidInURL = this.getInstanceAPIURL().substring(
+            8,
+            this.getInstanceAPIURL().indexOf(".api"),
+         )
+         url = this.getInstanceAPIURL().replace(getZuidInURL, zuid)
+      }
+
+      url = url.replace("/v1", "") + uri
+      return await this.makeRequest(url)
+   }
 }
