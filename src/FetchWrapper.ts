@@ -270,13 +270,19 @@ export default class FetchWrapper {
       return url
    }
 
-   async makeRequest(url: string, method = "GET", body = "", options: any = {}) {
+   async makeRequest(
+      url: string,
+      method = "GET",
+      body = "",
+      options: any = {},
+      token = "",
+   ) {
       if (method != "GET") options.body = body
 
       options.method = method
       options.headers = {
          "Content-Type": "application/json",
-         Authorization: `Bearer ${this.authToken}`,
+         Authorization: `Bearer ${token !== "" ? token : this.authToken}`,
       }
       options.credentials = "same-origin"
 
@@ -545,13 +551,13 @@ export default class FetchWrapper {
 
    // INSTANCES Functions
 
-   async createInstance(name: string, ecoZUID: string) {
+   async createInstance(name: string, ecoZUID: string, token: string) {
       let payload = JSON.stringify({
          name,
          ecoZUID,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.instances
-      return await this.makeRequest(url, "POST", payload)
+      return await this.makeRequest(url, "POST", payload, {}, token)
    }
 
    async verifyDns(domain: string, aRecord: string, cName: string) {
