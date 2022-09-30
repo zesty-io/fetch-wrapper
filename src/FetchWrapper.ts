@@ -1461,19 +1461,24 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT")
    }
 
-   async appendURI(uri: string, zuid: string) {
+   async customInstancesGet(uri: string, zuid: string) {
       let url = ""
-      if (this.getInstanceAPIURL().includes("undefined")) {
-         url = this.getInstanceAPIURL().replace("undefined", zuid)
+      if (zuid) {
+         if (this.getInstanceAPIURL().includes("undefined")) {
+            url = this.getInstanceAPIURL().replace("undefined", zuid)
+         } else {
+            const getZuidInURL = this.getInstanceAPIURL().substring(
+               8,
+               this.getInstanceAPIURL().indexOf(".api"),
+            )
+            url = this.getInstanceAPIURL().replace(getZuidInURL, zuid)
+         }
+
+         url = url.replace("/v1", "") + uri
       } else {
-         const getZuidInURL = this.getInstanceAPIURL().substring(
-            8,
-            this.getInstanceAPIURL().indexOf(".api"),
-         )
-         url = this.getInstanceAPIURL().replace(getZuidInURL, zuid)
+         url = this.getInstanceAPIURL().replace("/v1", "") + uri
       }
 
-      url = url.replace("/v1", "") + uri
       return await this.makeRequest(url)
    }
 }
