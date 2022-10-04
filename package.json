@@ -21,6 +21,7 @@
    "author": "Zesty.io",
    "license": "ISC",
    "dependencies": {
+      "dayjs": "^1.11.5",
       "form-data": "^4.0.0"
    },
    "devDependencies": {

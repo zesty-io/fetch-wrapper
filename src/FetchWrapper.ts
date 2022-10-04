@@ -20,6 +20,7 @@ import {
 
 import FormData from "form-data"
 import { customParams } from "./utils/index"
+import dayjs from "dayjs"
 
 export default class FetchWrapper {
    private instanceZUID: string
@@ -359,7 +360,7 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getInstanceAudit(limit = "10000") {
+   async getInstanceAudit(limit = "100") {
       let url =
          this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=${limit}`
       return await this.makeRequest(url)
@@ -1461,7 +1462,11 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT")
    }
 
-   async getUsage(instanceZUID: string, dateStart = "2022-08-30", dateEnd: string) {
+   async getUsage(
+      instanceZUID: string,
+      dateStart = dayjs().add(-7, "day").format("YYYY-MM-DD"),
+      dateEnd = dayjs().format("YYYY-MM-DD"),
+   ) {
       const url = `https://metrics.api.zesty.io/accounts/${instanceZUID}/usage?dateStart=${dateStart}&dateEnd=${dateEnd}`
       return await this.makeRequest(url, "GET")
    }
