@@ -19,3 +19,9 @@ export const customParams = (body = {}, method = "POST", token?: string): IParam
    }
    return params
 }
+
+export const date7DaysAgo = new Date(new Date().setDate(new Date().getDate() - 7))
+   .toISOString()
+   .slice(0, 10)
+
+export const dateToday = new Date().toISOString().slice(0, 10)

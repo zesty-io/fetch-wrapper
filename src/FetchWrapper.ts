@@ -19,7 +19,7 @@ import {
 } from "types"
 
 import FormData from "form-data"
-import { customParams } from "./utils/index"
+import { customParams, date7DaysAgo, dateToday } from "./utils/index"
 
 export default class FetchWrapper {
    private instanceZUID: string
@@ -359,9 +359,9 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getInstanceAudit() {
+   async getInstanceAudit(limit = "100") {
       let url =
-         this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=10000`
+         this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=${limit}`
       return await this.makeRequest(url)
    }
 
@@ -1459,6 +1459,11 @@ export default class FetchWrapper {
    async updateLocale(locale: string, action: string) {
       let url = `${this.instancesAPIURL}/env/langs/${locale}?action=${action}`
       return await this.makeRequest(url, "PUT")
+   }
+
+   async getUsage(instanceZUID: string, dateStart = date7DaysAgo, dateEnd = dateToday) {
+      const url = `https://metrics.api.zesty.io/accounts/${instanceZUID}/usage?dateStart=${dateStart}&dateEnd=${dateEnd}`
+      return await this.makeRequest(url, "GET")
    }
 
    async customInstancesGet(uri: string, instanceZUID: string) {
