@@ -359,9 +359,9 @@ export default class FetchWrapper {
       return await this.makeRequest(url)
    }
 
-   async getInstanceAudit() {
+   async getInstanceAudit(limit = "10000") {
       let url =
-         this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=10000`
+         this.getInstanceAPIURL() + this.instanceAPIEndpoints.audits + `?limit=${limit}`
       return await this.makeRequest(url)
    }
 
@@ -1459,5 +1459,9 @@ export default class FetchWrapper {
    async updateLocale(locale: string, action: string) {
       let url = `${this.instancesAPIURL}/env/langs/${locale}?action=${action}`
       return await this.makeRequest(url, "PUT")
+   }
+   async getUsage(instanceZUID: string, dateStart = "2022-08-30", dateEnd: string) {
+      const url = `https://metrics.api.zesty.io/accounts/${instanceZUID}/usage?dateStart=${dateStart}&dateEnd=${dateEnd}`
+      return await this.makeRequest(url, "GET")
    }
 }
