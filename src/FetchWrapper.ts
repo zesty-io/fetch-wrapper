@@ -1461,8 +1461,15 @@ export default class FetchWrapper {
       return await this.makeRequest(url, "PUT")
    }
 
-   async getUsage(instanceZUID: string, dateStart = date7DaysAgo, dateEnd = dateToday) {
-      const url = `https://metrics.api.zesty.io/accounts/${instanceZUID}/usage?dateStart=${dateStart}&dateEnd=${dateEnd}`
+   async getUsage(
+      instanceZUID: string,
+      dateStart = date7DaysAgo,
+      dateEnd = dateToday,
+      isProd = true,
+   ) {
+      const url = `https://metrics.api${
+         !isProd ? ".dev" : ""
+      }.zesty.io/accounts/${instanceZUID}/usage?dateStart=${dateStart}&dateEnd=${dateEnd}`
       return await this.makeRequest(url, "GET")
    }
 
