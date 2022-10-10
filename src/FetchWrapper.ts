@@ -621,14 +621,14 @@ export default class FetchWrapper {
    }
 
    async updateInstance(instanceZUID: string, params: string) {
+      let payload = JSON.stringify(params)
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.instancePUT, {
             INSTANCE_ZUID: instanceZUID,
-         }) +
-         `?action=${params}`
+         })
 
-      return await this.makeRequest(url, "PUT")
+      return await this.makeRequest(url, "PUT", payload)
    }
    async updateInstanceBlueprint(instanceZUID: string, zuid: string) {
       let payload = JSON.stringify({
