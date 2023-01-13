@@ -1493,4 +1493,9 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url)
    }
+
+   async getHeadTags() {
+      let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.headtags
+      return await this.makeRequest(url)
+   }
 }
