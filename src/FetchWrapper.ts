@@ -354,8 +354,13 @@ export default class FetchWrapper {
       }
    }
 
-   async getModels() {
-      let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.models
+   async getModels(zuid = "") {
+      let url = ""
+      if (zuid) {
+         url = `https://${zuid}.api.zesty.io/v1/content/models/`
+      } else {
+         url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.models
+      }
       return await this.makeRequest(url)
    }
 
