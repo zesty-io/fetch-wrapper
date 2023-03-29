@@ -27,7 +27,7 @@ jobs:
               GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
            run: |
               git add .
-              git commit --allow-empty -m "bump version"
+              git commit --allow-empty -m ":rocket: chore: deploy and bump version "
               git push origin version-branch:main
 
          # Create Release
