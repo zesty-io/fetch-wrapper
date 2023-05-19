@@ -1482,22 +1482,22 @@ export default class FetchWrapper {
    }
 
    async customInstancesGet(uri: string, instanceZUID: string) {
-      let url = ""
-      if (instanceZUID) {
-         if (this.getInstanceAPIURL().includes("undefined")) {
-            url = this.getInstanceAPIURL().replace("undefined", instanceZUID)
-         } else {
-            const getZuidInURL = this.getInstanceAPIURL().substring(
-               8,
-               this.getInstanceAPIURL().indexOf(".api"),
-            )
-            url = this.getInstanceAPIURL().replace(getZuidInURL, instanceZUID)
-         }
+      let url = `https://${instanceZUID}.api.zesty.io${uri}`
+      // if (instanceZUID) {
+      //    if (this.getInstanceAPIURL().includes("undefined")) {
+      //       url = this.getInstanceAPIURL().replace("undefined", instanceZUID)
+      //    } else {
+      //       const getZuidInURL = this.getInstanceAPIURL().substring(
+      //          8,
+      //          this.getInstanceAPIURL().indexOf(".api"),
+      //       )
+      //       url = this.getInstanceAPIURL().replace(getZuidInURL, instanceZUID)
+      //    }
 
-         url = url.replace("/v1", "") + uri
-      } else {
-         url = this.getInstanceAPIURL().replace("/v1", "") + uri
-      }
+      //    url = url.replace("/v1", "") + uri
+      // } else {
+      //    url = this.getInstanceAPIURL().replace("/v1", "") + uri
+      // }
 
       return await this.makeRequest(url)
    }
