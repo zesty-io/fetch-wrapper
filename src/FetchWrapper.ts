@@ -811,7 +811,7 @@ export default class FetchWrapper {
 
    async userResetPasswordConfirm(address: string, password: string, token: string) {
       let payload = JSON.stringify({ code: token, email: address, password })
-      let url = this.accountsAPIURL + this.accountsAPIEndpoints.userResetPasswordConfirm
+      let url = this.authAPIURL + this.accountsAPIEndpoints.userResetPasswordConfirm
       return await this.makeRequest(url, "POST", payload)
    }
    // Companies functions
