@@ -1506,4 +1506,14 @@ export default class FetchWrapper {
       let url = this.getInstanceAPIURL() + this.instanceAPIEndpoints.headtags
       return await this.makeRequest(url)
    }
+
+   async getItemVersions(modelZUID: string, itemZUID: string) {
+      let url =
+         this.getInstanceAPIURL() +
+         this.replaceInURL(this.instanceAPIEndpoints.itemsVersions, {
+            MODEL_ZUID: modelZUID,
+            ITEM_ZUID: itemZUID,
+         })
+      return await this.makeRequest(url)
+   }
 }
