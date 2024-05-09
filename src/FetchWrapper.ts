@@ -433,9 +433,8 @@ export default class FetchWrapper {
       let url =
          this.getInstanceAPIURL() +
          this.instanceAPIEndpoints.views +
-         "/" +
-         viewZUID +
-         "?action=publish"
+         `/${viewZUID}?action=publish`
+
       return await this.makeRequest(url, "POST", payload)
    }
 
