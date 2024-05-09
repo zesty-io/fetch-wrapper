@@ -436,7 +436,7 @@ export default class FetchWrapper {
          "/" +
          viewZUID +
          "?action=publish"
-      return await this.makeRequest(url, "PUT", payload)
+      return await this.makeRequest(url, "POST", payload)
    }
 
    // APP installations Section
