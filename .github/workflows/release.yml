@@ -22,9 +22,6 @@ jobs:
          - name: Install Dependencies
            run: npm install --force --prefer-offline --no-audit
 
-         - name: "Automated Version Bump"
-           run: npm version patch
-
          - name: "Build dist folder"
            run: npm run build
 
@@ -34,6 +31,7 @@ jobs:
            run: |
               git add .
               git commit --allow-empty -m ":rocket: chore: deploy and bump version "
+              npm version patch
               git push origin version-branch:main
 
          # Create Release
