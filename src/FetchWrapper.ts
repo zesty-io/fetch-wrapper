@@ -21,6 +21,7 @@ import {
 import FormData from "form-data"
 import { customParams, date7DaysAgo, dateToday } from "./utils/index"
 
+console.log("test")
 export default class FetchWrapper {
    private instanceZUID: string
    private authToken: string
