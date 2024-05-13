@@ -6,7 +6,7 @@
    "scripts": {
       "start": "webpack-dev-server --hot --open --mode=development ",
       "build": " webpack --mode=production",
-      "commit": " npm run test-all && npm run build && git add . && cz",
+      "commit": " npm run test-all && git add . && cz",
       "check-types": "tsc --pretty --noEmit",
       "check-format": "prettier --check .",
       "check-lint": "eslint . --ext ts --ext tsx --ext js",
