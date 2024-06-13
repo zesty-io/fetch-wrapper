@@ -1,27 +1,52 @@
 name: Fetchwrapper CI
+
 on:
-   push:
-      branches: [main]
    pull_request:
       branches: [main]
    workflow_dispatch:
-jobs:
-   end-to-end-tests:
-      runs-on: ubuntu-latest
-      env:
-         userAppSID: ${{ secrets.APP_SID }}
-         instanceZUID: ${{ secrets.INSTANCE_ZUID }}
-      steps:
-         - uses: actions/checkout@v2
+      schedule:
+         - cron: "0 0 * * *"
 
-         - uses: actions/setup-node@v1
-           with:
-              node-version: "14.x"
+concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+   cancel-in-progress: true
+
+jobs:
+   build-test:
+      strategy:
+         matrix:
+            os: [ubuntu-latest]
+            node-version: [20, 22]
+      runs-on: ${{ matrix.os }}
+
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+
          - name: Setup custom host for mylocal
            run: echo "127.0.0.1 test.zesty.io" | sudo tee -a /etc/hosts
-         - name: Install Dependencies
-           run: npm ci
-         - name: Build Project
-           run: npm run build
-         - name: unit test
+
+         - name: Setup Node.js
+           uses: actions/setup-node@v4
+           with:
+              node-version: ${{ matrix.node-version }}
+
+         - name: Write the .env file
+           run: |
+              echo '${{ secrets.ENV_FILE }}' > .env
+
+         - name: Install dependencies
+           run: npm install
+
+         - name: 🧪 Run unit tests
            run: npm run test
+
+   tests-pass:
+      needs: [build-test]
+
+      if: always()
+      runs-on: ubuntu-latest
+      name: 🚀🚀🚀 Ok to Merge 😎 👍👍👍
+      steps:
+         - run: exit 1
+           if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')) }}
