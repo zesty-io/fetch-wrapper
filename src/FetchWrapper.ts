@@ -1142,11 +1142,17 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async createRole(name: string, entityZUID: string, systemRoleZUID: string) {
+   async createRole(
+      name: string,
+      entityZUID: string,
+      systemRoleZUID: string,
+      description = "",
+   ) {
       let payload = JSON.stringify({
          name,
          entityZUID,
          systemRoleZUID,
+         description,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.rolesPOST
       return await this.makeRequest(url, "POST", payload)
@@ -1431,9 +1437,11 @@ export default class FetchWrapper {
    }
 
    // Search Items Function
-   async searchItems() {
+   async searchItems(params: Record<string, string> = {}) {
+      const searchParams = new URLSearchParams(params)?.toString()
       let url = this.instancesAPIURL + this.instanceAPIEndpoints.searchItemsGET
-      return await this.makeRequest(url)
+
+      return await this.makeRequest(`${url}?${searchParams}`)
    }
 
    // Locales functionality
