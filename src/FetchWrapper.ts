@@ -16,6 +16,7 @@ import {
    IsiteServicesEndpoints,
    IUpdateTeam,
    OPTIONS,
+   GranularRole,
 } from "types"
 
 import FormData from "form-data"
@@ -1251,6 +1252,16 @@ export default class FetchWrapper {
          this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPUT, {
             ROLE_ZUID: roleZUID,
          })
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async updateGranularRolesBatch(roleZUID: string, granularRoles: GranularRole[]) {
+      let payload = JSON.stringify(granularRoles)
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPUT, {
+            ROLE_ZUID: roleZUID,
+         })
+
       return await this.makeRequest(url, "PUT", payload)
    }
    async createGranularRole(roleZUID: string, resourceZUID: string, create = true) {

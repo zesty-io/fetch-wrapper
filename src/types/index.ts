@@ -211,3 +211,14 @@ export interface ICreateWebhook {
    authorization?: string
    text: string
 }
+
+export type GranularRole = {
+   create: boolean
+   delete: boolean
+   grant: boolean
+   name: string
+   publish: boolean
+   read: boolean
+   resourceZUID: string
+   update: boolean
+}
