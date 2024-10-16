@@ -1265,7 +1265,7 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async updateGranularRolesBatch(roleZUID: string, granularRoles: GranularRole[]) {
+   async batchUpdateGranularRoles(roleZUID: string, granularRoles: GranularRole[]) {
       let payload = JSON.stringify(granularRoles)
       let url =
          this.accountsAPIURL +
@@ -1275,8 +1275,23 @@ export default class FetchWrapper {
 
       return await this.makeRequest(url, "PUT", payload)
    }
-   async createGranularRole(roleZUID: string, resourceZUID: string, create = true) {
-      let payload = JSON.stringify({ resourceZUID, create })
+   async createGranularRole(
+      roleZUID: string,
+      resourceZUID: string,
+      create = true,
+      read = false,
+      update = false,
+      remove = false,
+      publish = false,
+   ) {
+      let payload = JSON.stringify({
+         resourceZUID,
+         create,
+         read,
+         update,
+         delete: remove,
+         publish,
+      })
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPOST, {
