@@ -4,7 +4,7 @@
    "description": "",
    "main": "dist/index.js",
    "scripts": {
-      "start": "webpack-dev-server --hot --open --mode=development ",
+      "start": "webpack-dev-server --hot --open --mode=development --port 8070",
       "build": " webpack --mode=production",
       "commit": " npm run test-all && git add . && cz",
       "check-types": "tsc --pretty --noEmit",
