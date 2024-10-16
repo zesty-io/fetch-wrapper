@@ -120,6 +120,7 @@ export interface IaccountsAPIEndpoints {
    // Roles
    roleGET: string
    roleDELETE: string
+   rolePUT: string
    rolesPOST: string
    roles: string
    instancesRoles: string

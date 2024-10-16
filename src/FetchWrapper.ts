@@ -128,6 +128,7 @@ export default class FetchWrapper {
          // Roles
          roleGET: "/roles/ROLE_ZUID",
          roleDELETE: "/roles/ROLE_ZUID",
+         rolePUT: "/roles/ROLE_ZUID",
          rolesPOST: "/roles",
          roles: "/roles",
          instancesRoles: "/instances/INSTANCE_ZUID/roles",
@@ -1157,6 +1158,16 @@ export default class FetchWrapper {
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.rolesPOST
       return await this.makeRequest(url, "POST", payload)
+   }
+   async updateRole(roleZUID: string, data: { name: string; description: string }) {
+      const payload = JSON.stringify(data)
+      const url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolePUT, {
+            ROLE_ZUID: roleZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
    }
    async getRoles() {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.roles
