@@ -1159,7 +1159,10 @@ export default class FetchWrapper {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.rolesPOST
       return await this.makeRequest(url, "POST", payload)
    }
-   async updateRole(roleZUID: string, data: { name: string; description: string }) {
+   async updateRole(
+      roleZUID: string,
+      data: { name: string; description: string; systemRoleZUID: string },
+   ) {
       const payload = JSON.stringify(data)
       const url =
          this.accountsAPIURL +
