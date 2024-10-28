@@ -130,6 +130,7 @@ export interface IaccountsAPIEndpoints {
    userRolesPOST: string
    userRolesDELETE: string
    userRolesPUT: string
+   bulkReassignUserRolesPUT: string
    // Roles Granular
    rolesGranularGET: string
    rolesGranularDELETE: string

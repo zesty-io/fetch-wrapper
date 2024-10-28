@@ -138,6 +138,7 @@ export default class FetchWrapper {
          userRolesPOST: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesDELETE: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesPUT: "/users/USER_ZUID/roles/ROLE_ZUID",
+         bulkReassignUserRolesPUT: "/users/roles/ROLE_ZUID",
          // Roles Granular
          rolesGranularGET: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
          rolesGranularDELETE: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
@@ -1193,6 +1194,22 @@ export default class FetchWrapper {
             ROLE_ZUID: roleZUID,
          })
       return await this.makeRequest(url, "POST", payload)
+   }
+   async bulkReassignUsersRole({
+      oldRoleZUID,
+      newRoleZUID,
+   }: {
+      oldRoleZUID: string
+      newRoleZUID: string
+   }) {
+      const payload = JSON.stringify({ roleZUID: newRoleZUID })
+      const url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.bulkReassignUserRolesPUT, {
+            ROLE_ZUID: oldRoleZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
    }
    async deleteUserRole(userZUID: string, roleZUID: string) {
       let payload = JSON.stringify({})
