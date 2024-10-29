@@ -120,6 +120,7 @@ export interface IaccountsAPIEndpoints {
    // Roles
    roleGET: string
    roleDELETE: string
+   rolePUT: string
    rolesPOST: string
    roles: string
    instancesRoles: string
@@ -129,6 +130,7 @@ export interface IaccountsAPIEndpoints {
    userRolesPOST: string
    userRolesDELETE: string
    userRolesPUT: string
+   bulkReassignUserRolesPUT: string
    // Roles Granular
    rolesGranularGET: string
    rolesGranularDELETE: string
@@ -210,4 +212,15 @@ export interface ICreateWebhook {
    contentType?: string
    authorization?: string
    text: string
+}
+
+export type GranularRole = {
+   create: boolean
+   delete: boolean
+   grant: boolean
+   name: string
+   publish: boolean
+   read: boolean
+   resourceZUID: string
+   update: boolean
 }
