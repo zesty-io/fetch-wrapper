@@ -16,6 +16,7 @@ import {
    IsiteServicesEndpoints,
    IUpdateTeam,
    OPTIONS,
+   GranularRole,
 } from "types"
 
 import FormData from "form-data"
@@ -127,6 +128,7 @@ export default class FetchWrapper {
          // Roles
          roleGET: "/roles/ROLE_ZUID",
          roleDELETE: "/roles/ROLE_ZUID",
+         rolePUT: "/roles/ROLE_ZUID",
          rolesPOST: "/roles",
          roles: "/roles",
          instancesRoles: "/instances/INSTANCE_ZUID/roles",
@@ -136,6 +138,7 @@ export default class FetchWrapper {
          userRolesPOST: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesDELETE: "/users/USER_ZUID/roles/ROLE_ZUID",
          userRolesPUT: "/users/USER_ZUID/roles/ROLE_ZUID",
+         bulkReassignUserRolesPUT: "/users/roles/ROLE_ZUID",
          // Roles Granular
          rolesGranularGET: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
          rolesGranularDELETE: "/roles/ROLE_ZUID/granulars/RESOURCE_ZUID",
@@ -1142,14 +1145,33 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "DELETE", payload)
    }
-   async createRole(name: string, entityZUID: string, systemRoleZUID: string) {
+   async createRole(
+      name: string,
+      entityZUID: string,
+      systemRoleZUID: string,
+      description = "",
+   ) {
       let payload = JSON.stringify({
          name,
          entityZUID,
          systemRoleZUID,
+         description,
       })
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.rolesPOST
       return await this.makeRequest(url, "POST", payload)
+   }
+   async updateRole(
+      roleZUID: string,
+      data: { name: string; description: string; systemRoleZUID: string },
+   ) {
+      const payload = JSON.stringify(data)
+      const url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolePUT, {
+            ROLE_ZUID: roleZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
    }
    async getRoles() {
       let url = this.accountsAPIURL + this.accountsAPIEndpoints.roles
@@ -1172,6 +1194,22 @@ export default class FetchWrapper {
             ROLE_ZUID: roleZUID,
          })
       return await this.makeRequest(url, "POST", payload)
+   }
+   async bulkReassignUsersRole({
+      oldRoleZUID,
+      newRoleZUID,
+   }: {
+      oldRoleZUID: string
+      newRoleZUID: string
+   }) {
+      const payload = JSON.stringify({ roleZUID: newRoleZUID })
+      const url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.bulkReassignUserRolesPUT, {
+            ROLE_ZUID: oldRoleZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
    }
    async deleteUserRole(userZUID: string, roleZUID: string) {
       let payload = JSON.stringify({})
@@ -1247,8 +1285,33 @@ export default class FetchWrapper {
          })
       return await this.makeRequest(url, "PUT", payload)
    }
-   async createGranularRole(roleZUID: string, resourceZUID: string, create = true) {
-      let payload = JSON.stringify({ resourceZUID, create })
+   async batchUpdateGranularRoles(roleZUID: string, granularRoles: GranularRole[]) {
+      let payload = JSON.stringify(granularRoles)
+      let url =
+         this.accountsAPIURL +
+         this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPUT, {
+            ROLE_ZUID: roleZUID,
+         })
+
+      return await this.makeRequest(url, "PUT", payload)
+   }
+   async createGranularRole(
+      roleZUID: string,
+      resourceZUID: string,
+      create = true,
+      read = false,
+      update = false,
+      remove = false,
+      publish = false,
+   ) {
+      let payload = JSON.stringify({
+         resourceZUID,
+         create,
+         read,
+         update,
+         delete: remove,
+         publish,
+      })
       let url =
          this.accountsAPIURL +
          this.replaceInURL(this.accountsAPIEndpoints.rolesGranularPOST, {
@@ -1431,9 +1494,11 @@ export default class FetchWrapper {
    }
 
    // Search Items Function
-   async searchItems() {
+   async searchItems(params: Record<string, string> = {}) {
+      const searchParams = new URLSearchParams(params)?.toString()
       let url = this.instancesAPIURL + this.instanceAPIEndpoints.searchItemsGET
-      return await this.makeRequest(url)
+
+      return await this.makeRequest(`${url}?${searchParams}`)
    }
 
    // Locales functionality
